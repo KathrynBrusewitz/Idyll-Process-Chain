@@ -1,8 +1,8 @@
-[meta title:"Process Node System and Chaining" description:"An exploratory explanation of the process node system and chaining framework." /]
+[meta title:"Process Node System, Chaining and Lifecycle" description:"An exploratory explanation of the process node system, chaining, and lifecycle framework." /]
 
 [Header
-  title:"Process Node System and Chaining"
-  subtitle:"An exploratory explanation of the process node system and chaining framework."
+  title:"Process Systems, Chains, and Lifecycles"
+  subtitle:"An exploratory explanation of the architectural design of a visual framework for a system, chain, and lifecycle of processes."
   author:"Kathryn Brusewitz"
   authorLink:"https://kathrynbrusewitz.github.io/" /]
 
@@ -20,15 +20,52 @@ Growing IT infrastructure of enterprises, increasing number of compliances, and 
 
 I work for Contuit, a four-person startup building a framework that centralizes integrations into one platform, brings MSPs together as a community, drives process maturity and enforces integrity.
 
-The purpose of this project is to explore the concept of a process maturity framework from scratch. How do we optimize processes? What do we need to know in order to make informed decisions when updating processes? How do we effectively visualize the execution history of a process? How should we implement versioning of processes? How do we effectively visualize version history so we can identify what works and what does not? How do we handle the concept of sub-processes and parallel processes?
+The purpose of this project is to explore the concept of a process maturity framework from scratch. How do we optimize processes? What do we need to know in order to make informed decisions when updating processes? How do we visualize the execution history of a process? How should we implement versioning of processes? How do we visualize version history so we can identify what works and what does not? How do we handle the concept of sub-processes and parallel processes?
 
 These questions motivate the need to design a visual framework encompassing the system of relationships and histories between processes and executions.
 
 Why explore visualizations? Traditionally, engineers monitor and manage processes from a dashboard, typically viewing and acting on a host of processes in a list. This type of view stifles the evolution of processes. Processes are not always linear. As processes get more complex, depend on other integrations, and depend on even other processes and likewise is a dependency for others, managing and understanding them from a list becomes difficult.
 
-## Processes and Executions
+In an effort to explain my design choices, I do not just present the visual framework, but I walk through the architectural design process * *badum-tish* * from which the framework came about. For the full list of components and their definitions, skip to the Appendix down below.
 
-We should start by defining the components.
+## Process
+
+We should start by defining what a process is.
+
+A process...
+
+- Defines the steps to be completed
+- Must have at least one step
+- Must be executable itself
+
+The most basic process is linear.
+
+
+
+## Triggers and Dependencies
+
+## Process Versioning and History
+
+## Process Lifecycle
+
+The following lifecycle demonstrates how updates to a process chain builds the version history of the process.
+
+We begin by defining Process 1, implicitly initializing Process Chain 1v1.
+
+We then define Process 2, implicitly initializing Process Chain 2v1.
+
+We then update Process 1 so that Step 2 triggers Process Chain 2v1. This saves as Process Chain 1v2.
+
+We then update Process 2. This saves as Process Chain 2v2.
+
+We then update Process 1 to instead use Process Chain 2v2. This saves a Process Chain 1v3.
+
+## Execution History
+
+## Execution Breakdown
+
+
+## Appendix
 
 A process...
 
@@ -48,13 +85,3 @@ A step...
 - Can trigger the execution of one or more other processes
 - Cannot trigger the execution of its own process
 - Can depend on the completion of one or more steps in one or more other processes
-
-## Linear Process
-
-The most basic process is linear.
-
-## Triggers and Dependencies
-
-## Versioning and History
-
-## Execution Breakdown
