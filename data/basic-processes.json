@@ -1,0 +1,40 @@
+[
+  {
+    "process": 1,
+    "version": 1,
+    "name": "Process A",
+    "enabled": true,
+    "steps": [
+      {
+        "step": 1,
+        "name": "Step 1",
+        "triggers": [{}],
+        "dependsOn": [{}]
+      },
+      {
+        "step": 2,
+        "name": "Step 2",
+        "triggers": [],
+        "dependsOn": [{}]
+      },
+      {
+        "step": 3,
+        "name": "Step 3",
+        "triggers": [{}],
+        "dependsOn": [{}]
+      },
+      {
+        "step": 4,
+        "name": "Step 4",
+        "triggers": [{}],
+        "dependsOn": []
+      },
+      {
+        "step": 5,
+        "name": "Step 5",
+        "triggers": [{}],
+        "dependsOn": [{}]
+      }
+    ]
+  }
+]

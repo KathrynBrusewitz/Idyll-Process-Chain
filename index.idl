@@ -1,39 +1,60 @@
-[meta title:"Idyll Process Chain" description:"Short description of your project" /]
+[meta title:"Process Node System and Chaining" description:"An exploratory explanation of the process node system and chaining framework." /]
 
 [Header
-  title:"Idyll Process Chain"
-  subtitle:"Welcome to Idyll. Open index.idl to start writing"
-  author:"Your Name Here"
-  authorLink:"https://idyll-lang.github.io" /]
+  title:"Process Node System and Chaining"
+  subtitle:"An exploratory explanation of the process node system and chaining framework."
+  author:"Kathryn Brusewitz"
+  authorLink:"https://kathrynbrusewitz.github.io/" /]
 
-This is an Idyll file. Write text
-as you please in here. To add interactivity,
-you can add  different components to the text.
+## Managed Services
 
-Here is how you can use a variable:
+With IT driving all business operations, the significance of aligning managed IT services with all levels in an organization has grown to ensure meeting business goals. Businesses of all sizes and across all industries hire MSPs (Managed Service Providers) as an efficient way to stay up-to-date on technology, have access to skills and address isues related to cost, quality of service and risk.
 
-[var name:"exampleVar" value:5 /]
+Bound by a contractual, service-level agreement with the client, MSPs assume the management and responsibility for providing a defined set of services that meet performance and quality metrics.
 
-[Range min:0 max:10 value:exampleVar /]
-[Display value:exampleVar /]
+Generally, MSPs provide dedicated support for IT infrastructure. Historically, services began with remote monitoring and management of servers and networks. Today, the scope of MSP services have expanded to include mobile device management, managed security, remote firewall administration and security-as-a-service, and managed print services.
 
-```js
-var code = true;
-```
+Growing IT infrastructure of enterprises, increasing number of compliances, and increasing adoption rate of cloud deployment by small and medium-sized businesses, are driving the growth of the managed services market. The managed services market size is expected to grow from an estimated $152.45 billion in 2017 to $267.84 billion by 2022.
 
-And here is a custom component:
+## Motivation
 
-[CustomComponent /]
+I work for Contuit, a four-person startup building a framework that centralizes integrations into one platform, brings MSPs together as a community, drives process maturity and enforces integrity.
 
-You can use standard html tags if a
-component with the same name
-doesn't exist.
+The purpose of this project is to explore the concept of a process maturity framework from scratch. How do we optimize processes? What do we need to know in order to make informed decisions when updating processes? How do we effectively visualize the execution history of a process? How should we implement versioning of processes? How do we effectively visualize version history so we can identify what works and what does not? How do we handle the concept of sub-processes and parallel processes?
 
-* *markdown* syntax is supported.
+These questions motivate the need to design a visual framework encompassing the system of relationships and histories between processes and executions.
 
-[var name:"state" value:0 /]
+Why explore visualizations? Traditionally, engineers monitor and manage processes from a dashboard, typically viewing and acting on a host of processes in a list. This type of view stifles the evolution of processes. Processes are not always linear. As processes get more complex, depend on other integrations, and depend on even other processes and likewise is a dependency for others, managing and understanding them from a list becomes difficult.
 
-[CustomD3Component state:state /]
-[button onClick:`state++`]
-  Click Me.
-[/button]
+## Processes and Executions
+
+We should start by defining the components.
+
+A process...
+
+- Defines the steps to be completed
+- Must have at least one step
+- Must be executable itself
+- Has two states: Enabled and Deprecated
+
+An execution...
+
+- Is an instance of a process
+- Is started by an engineer, by another process, or by an API call
+- Has three states: In-Progress, Finished (Success), Failed
+
+A step...
+
+- Can trigger the execution of one or more other processes
+- Cannot trigger the execution of its own process
+- Can depend on the completion of one or more steps in one or more other processes
+
+## Linear Process
+
+The most basic process is linear.
+
+## Triggers and Dependencies
+
+## Versioning and History
+
+## Execution Breakdown

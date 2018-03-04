@@ -1,0 +1,141 @@
+[
+  {
+    "process": 1,
+    "version": 1,
+    "name": "Process A",
+    "enabled": true,
+    "steps": [
+      {
+        "step": 1,
+        "name": "Step 1",
+        "triggers": [{}],
+        "dependsOn": [{}]
+      },
+      {
+        "step": 2,
+        "name": "Step 2",
+        "triggers": [
+          {
+            "process": 2,
+            "version": 2
+          }
+        ],
+        "dependsOn": [{}]
+      },
+      {
+        "step": 3,
+        "name": "Step 3",
+        "triggers": [{}],
+        "dependsOn": [{}]
+      },
+      {
+        "step": 4,
+        "name": "Step 4",
+        "triggers": [{}],
+        "dependsOn": [
+          {
+            "process": 2,
+            "version": 1,
+            "step": 4
+          }
+        ]
+      },
+      {
+        "step": 5,
+        "name": "Step 5",
+        "triggers": [{}],
+        "dependsOn": [{}]
+      }
+    ]
+  },
+  {
+    "process": 2,
+    "version": 1,
+    "name": "Process B",
+    "enabled": true,
+    "steps": [
+      {
+        "step": 1,
+        "name": "Step 1",
+        "triggers": [{}],
+        "dependsOn": [{}]
+      },
+      {
+        "step": 2,
+        "name": "Step 2",
+        "triggers": [],
+        "dependsOn": [{}]
+      },
+      {
+        "step": 3,
+        "name": "Step 3",
+        "triggers": [{}],
+        "dependsOn": [{}]
+      },
+      {
+        "step": 4,
+        "name": "Step 4",
+        "triggers": [{}],
+        "dependsOn": [{}]
+      },
+      {
+        "step": 5,
+        "name": "Step 5",
+        "triggers": [{}],
+        "dependsOn": [{}]
+      }
+    ]
+  },
+  {
+    "process": 2,
+    "version": 2,
+    "name": "Process B",
+    "enabled": true,
+    "steps": [
+      {
+        "step": 1,
+        "name": "Step 1",
+        "triggers": [{}],
+        "dependsOn": [{}]
+      },
+      {
+        "step": 2,
+        "name": "Step 2",
+        "triggers": [],
+        "dependsOn": [{}]
+      },
+      {
+        "step": 3,
+        "name": "Step 3",
+        "triggers": [{}],
+        "dependsOn": [{}]
+      }
+    ]
+  },
+  {
+    "process": 3,
+    "version": 1,
+    "name": "Process C",
+    "enabled": true,
+    "steps": [
+      {
+        "step": 1,
+        "name": "Step 1",
+        "triggers": [{}],
+        "dependsOn": [{}]
+      },
+      {
+        "step": 2,
+        "name": "Step 2",
+        "triggers": [],
+        "dependsOn": [{}]
+      },
+      {
+        "step": 3,
+        "name": "Step 3",
+        "triggers": [{}],
+        "dependsOn": [{}]
+      }
+    ]
+  }
+]
