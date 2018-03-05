@@ -2,7 +2,7 @@
 
 [Header
   title:"Process Systems, Chains, and Lifecycles"
-  subtitle:"An exploratory explanation of the architectural design of a visual framework for a system, chain, and lifecycle of processes."
+  subtitle:"An exploratory explanation of the architectural design of a visual framework for processes."
   author:"Kathryn Brusewitz"
   authorLink:"https://kathrynbrusewitz.github.io/" /]
 
@@ -40,7 +40,7 @@ A process...
 
 The most basic process is linear.
 
-
+TODO: Process Component: Render a Linear Process
 
 ## Triggers and Dependencies
 
@@ -64,24 +64,56 @@ We then update Process 1 to instead use Process Chain 2v2. This saves a Process 
 
 ## Execution Breakdown
 
+## Application View Flow
+
+This section details my suggestion for designing the user experience within the framework. Beginning from the highest level of overview, the engineer drills down through components and sub-components of the process framework to reveal more specific details.
+
+### Process System
+
+A more accurate, but more verbose, term for this view may be "System of Process Chains". I call it a Process System for short.
+
+The Process System lays out all the Process Chains that have ever been defined, simplified into blocks. The focus is on the relationships drawn between different versions across all Processes. Each column is a Process, listing down the version history of that process.
+
+Visual cues can be applied to the blocks. Examples are:
+
+- Mark deprecated (non-executable) versions by fading them or crossing them out.
+- Mark Process Chains that are not meeting success criteria by shading them a different color.
+
+This view can be enhanced by providing filter options to the user. Examples are:
+
+- Filter out deprecated versions or available versions.
+- Filter by attributes available in Process Chains, e.g. by execution metrics (engineers involved, execution frequency) and performance metrics.
+- Filter for all Process Chains with a dependency on a given Process Chain.
+- Filter for all Process Chains that trigger a given Process Chain.
+
+### Process Lifecycle
+
+The Process Lifecycle is essentially the history of the process. It allows us to compare details and metrics between versions, where each version is a Process Chain.
+
+### Process Chain
+
+A Process Chain is synonymous with a version of a process. It does not reveal the minute details of the steps, but rather gives a map of how steps relate to each other, both within the same process and with other processes.
+
+From here, we can drilldown into a specific Process.
+
+### Process
+
+The Process shows us the steps in full detail while leaving out the relationships between steps. We leave that to the Process Chain to effectively visualize.
+
+The Process view is the most effective visualization for engineers to carry out process executions. It is also the most adaptable to an edit view.
 
 ## Appendix
 
-A process...
+[dl]
+  [dt]Process[/dt]
+  [dd]Defines the steps to be completed. Must have at least one step and must be executable itself. Has two states: Enabled and Deprecated.[/dd]
 
-- Defines the steps to be completed
-- Must have at least one step
-- Must be executable itself
-- Has two states: Enabled and Deprecated
+  [dt]Execution[/dt]
+  [dd]An instance of a process. Typically started by an engineer, by another process, or by an API call. Has three states: In-Progress, Finished (Success), Failed.[/dd]
 
-An execution...
+  [dt]Step[/dt]
+  [dd]Must belong to a process. Can trigger the execution of one or more other processes. Cannot trigger the execution of its own process. Can depend on the completion of one or more steps in one or more other processes[/dd]
 
-- Is an instance of a process
-- Is started by an engineer, by another process, or by an API call
-- Has three states: In-Progress, Finished (Success), Failed
-
-A step...
-
-- Can trigger the execution of one or more other processes
-- Cannot trigger the execution of its own process
-- Can depend on the completion of one or more steps in one or more other processes
+  [dt]Process Chain[/dt]
+  [dd]A version of a process. Shows how steps relate to other steps within the same process and other processes.[/dd]
+[/dl]
