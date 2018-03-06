@@ -38,9 +38,18 @@ A process...
 - Must have at least one step
 - Must be executable itself
 
-The most basic process is linear.
+The most basic process is linear. [var name:"numSteps" value:3 /]
 
-TODO: Process Component: Render a Linear Process
+[var name:"roi" value:`{ x: [-0.5, 6], y: [-0.5, 0.5] }` /]
+[Range value:numSteps min:1 max:6 /]
+[Display var:numSteps format:"d" /] Steps
+
+[IdyllApparatusComponent
+  _url: "components/LinearProcessChain.json"
+  _regionOfInterest: roi
+  _width: 400
+  _height: 60
+  numSteps: numSteps /]
 
 ## Triggers and Dependencies
 

@@ -1,4 +1,74 @@
-require=(function(){function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s}return e})()({"/Users/kathryn/Projects/Idyll-Process-Chain/components/default/header.js":[function(require,module,exports){
+require=(function(){function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s}return e})()({"/Users/kathryn/Projects/Idyll-Process-Chain/components/default/display.js":[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Format = require('d3-format');
+
+var Display = function (_React$PureComponent) {
+  _inherits(Display, _React$PureComponent);
+
+  function Display(props) {
+    _classCallCheck(this, Display);
+
+    var _this = _possibleConstructorReturn(this, (Display.__proto__ || Object.getPrototypeOf(Display)).call(this, props));
+
+    _this.format = Format.format(props.format || '0.2f');
+    return _this;
+  }
+
+  _createClass(Display, [{
+    key: 'formatValue',
+    value: function formatValue(v) {
+      var t = typeof v === 'undefined' ? 'undefined' : _typeof(v);
+      switch (t) {
+        case 'object':
+          return JSON.stringify(v);
+        case 'number':
+          return this.format(v);
+        case 'string':
+        default:
+          return v;
+      }
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var value = this.props.value;
+
+      var v = value !== undefined ? value : this.props.var;
+      return _react2.default.createElement(
+        'span',
+        null,
+        this.formatValue(v)
+      );
+    }
+  }]);
+
+  return Display;
+}(_react2.default.PureComponent);
+
+exports.default = Display;
+
+},{"d3-format":"/Users/kathryn/Projects/Idyll-Process-Chain/node_modules/d3-format/build/d3-format.js","react":"/Users/kathryn/Projects/Idyll-Process-Chain/node_modules/react/index.js"}],"/Users/kathryn/Projects/Idyll-Process-Chain/components/default/header.js":[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -62,6 +132,68 @@ var Header = function (_React$PureComponent) {
 }(_react2.default.PureComponent);
 
 exports.default = Header;
+
+},{"react":"/Users/kathryn/Projects/Idyll-Process-Chain/node_modules/react/index.js"}],"/Users/kathryn/Projects/Idyll-Process-Chain/components/default/range.js":[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = require("react");
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Range = function (_React$PureComponent) {
+  _inherits(Range, _React$PureComponent);
+
+  function Range(props) {
+    _classCallCheck(this, Range);
+
+    return _possibleConstructorReturn(this, (Range.__proto__ || Object.getPrototypeOf(Range)).call(this, props));
+  }
+
+  _createClass(Range, [{
+    key: "handleChange",
+    value: function handleChange(event) {
+      this.props.updateProps({
+        value: +event.target.value
+      });
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _props = this.props,
+          value = _props.value,
+          min = _props.min,
+          max = _props.max,
+          step = _props.step;
+
+      return _react2.default.createElement("input", { type: "range", onChange: this.handleChange.bind(this), value: value, min: min, max: max, step: step });
+    }
+  }]);
+
+  return Range;
+}(_react2.default.PureComponent);
+
+Range.defaultProps = {
+  value: 0,
+  min: 0,
+  max: 1,
+  step: 1
+};
+
+exports.default = Range;
 
 },{"react":"/Users/kathryn/Projects/Idyll-Process-Chain/node_modules/react/index.js"}],"/Users/kathryn/Projects/Idyll-Process-Chain/node_modules/camel-case/camel-case.js":[function(require,module,exports){
 'use strict';
@@ -129,7 +261,356 @@ module.exports = function (value, locale) {
   return upperCase(snakeCase(value, locale), locale);
 };
 
-},{"snake-case":"/Users/kathryn/Projects/Idyll-Process-Chain/node_modules/snake-case/snake-case.js","upper-case":"/Users/kathryn/Projects/Idyll-Process-Chain/node_modules/upper-case/upper-case.js"}],"/Users/kathryn/Projects/Idyll-Process-Chain/node_modules/define-properties/index.js":[function(require,module,exports){
+},{"snake-case":"/Users/kathryn/Projects/Idyll-Process-Chain/node_modules/snake-case/snake-case.js","upper-case":"/Users/kathryn/Projects/Idyll-Process-Chain/node_modules/upper-case/upper-case.js"}],"/Users/kathryn/Projects/Idyll-Process-Chain/node_modules/d3-format/build/d3-format.js":[function(require,module,exports){
+'use strict';
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+// https://d3js.org/d3-format/ Version 1.2.2. Copyright 2018 Mike Bostock.
+(function (global, factory) {
+  (typeof exports === 'undefined' ? 'undefined' : _typeof(exports)) === 'object' && typeof module !== 'undefined' ? factory(exports) : typeof define === 'function' && define.amd ? define(['exports'], factory) : factory(global.d3 = global.d3 || {});
+})(undefined, function (exports) {
+  'use strict';
+
+  // Computes the decimal coefficient and exponent of the specified number x with
+  // significant digits p, where x is positive and p is in [1, 21] or undefined.
+  // For example, formatDecimal(1.23) returns ["123", 0].
+
+  var formatDecimal = function formatDecimal(x, p) {
+    if ((i = (x = p ? x.toExponential(p - 1) : x.toExponential()).indexOf("e")) < 0) return null; // NaN, ±Infinity
+    var i,
+        coefficient = x.slice(0, i);
+
+    // The string returned by toExponential either has the form \d\.\d+e[-+]\d+
+    // (e.g., 1.2e+3) or the form \de[-+]\d+ (e.g., 1e+3).
+    return [coefficient.length > 1 ? coefficient[0] + coefficient.slice(2) : coefficient, +x.slice(i + 1)];
+  };
+
+  var exponent = function exponent(x) {
+    return x = formatDecimal(Math.abs(x)), x ? x[1] : NaN;
+  };
+
+  var formatGroup = function formatGroup(grouping, thousands) {
+    return function (value, width) {
+      var i = value.length,
+          t = [],
+          j = 0,
+          g = grouping[0],
+          length = 0;
+
+      while (i > 0 && g > 0) {
+        if (length + g + 1 > width) g = Math.max(1, width - length);
+        t.push(value.substring(i -= g, i + g));
+        if ((length += g + 1) > width) break;
+        g = grouping[j = (j + 1) % grouping.length];
+      }
+
+      return t.reverse().join(thousands);
+    };
+  };
+
+  var formatNumerals = function formatNumerals(numerals) {
+    return function (value) {
+      return value.replace(/[0-9]/g, function (i) {
+        return numerals[+i];
+      });
+    };
+  };
+
+  var formatDefault = function formatDefault(x, p) {
+    x = x.toPrecision(p);
+
+    out: for (var n = x.length, i = 1, i0 = -1, i1; i < n; ++i) {
+      switch (x[i]) {
+        case ".":
+          i0 = i1 = i;break;
+        case "0":
+          if (i0 === 0) i0 = i;i1 = i;break;
+        case "e":
+          break out;
+        default:
+          if (i0 > 0) i0 = 0;break;
+      }
+    }
+
+    return i0 > 0 ? x.slice(0, i0) + x.slice(i1 + 1) : x;
+  };
+
+  var prefixExponent;
+
+  var formatPrefixAuto = function formatPrefixAuto(x, p) {
+    var d = formatDecimal(x, p);
+    if (!d) return x + "";
+    var coefficient = d[0],
+        exponent = d[1],
+        i = exponent - (prefixExponent = Math.max(-8, Math.min(8, Math.floor(exponent / 3))) * 3) + 1,
+        n = coefficient.length;
+    return i === n ? coefficient : i > n ? coefficient + new Array(i - n + 1).join("0") : i > 0 ? coefficient.slice(0, i) + "." + coefficient.slice(i) : "0." + new Array(1 - i).join("0") + formatDecimal(x, Math.max(0, p + i - 1))[0]; // less than 1y!
+  };
+
+  var formatRounded = function formatRounded(x, p) {
+    var d = formatDecimal(x, p);
+    if (!d) return x + "";
+    var coefficient = d[0],
+        exponent = d[1];
+    return exponent < 0 ? "0." + new Array(-exponent).join("0") + coefficient : coefficient.length > exponent + 1 ? coefficient.slice(0, exponent + 1) + "." + coefficient.slice(exponent + 1) : coefficient + new Array(exponent - coefficient.length + 2).join("0");
+  };
+
+  var formatTypes = {
+    "": formatDefault,
+    "%": function _(x, p) {
+      return (x * 100).toFixed(p);
+    },
+    "b": function b(x) {
+      return Math.round(x).toString(2);
+    },
+    "c": function c(x) {
+      return x + "";
+    },
+    "d": function d(x) {
+      return Math.round(x).toString(10);
+    },
+    "e": function e(x, p) {
+      return x.toExponential(p);
+    },
+    "f": function f(x, p) {
+      return x.toFixed(p);
+    },
+    "g": function g(x, p) {
+      return x.toPrecision(p);
+    },
+    "o": function o(x) {
+      return Math.round(x).toString(8);
+    },
+    "p": function p(x, _p) {
+      return formatRounded(x * 100, _p);
+    },
+    "r": formatRounded,
+    "s": formatPrefixAuto,
+    "X": function X(x) {
+      return Math.round(x).toString(16).toUpperCase();
+    },
+    "x": function x(_x) {
+      return Math.round(_x).toString(16);
+    }
+  };
+
+  // [[fill]align][sign][symbol][0][width][,][.precision][type]
+  var re = /^(?:(.)?([<>=^]))?([+\-\( ])?([$#])?(0)?(\d+)?(,)?(\.\d+)?([a-z%])?$/i;
+
+  function formatSpecifier(specifier) {
+    return new FormatSpecifier(specifier);
+  }
+
+  formatSpecifier.prototype = FormatSpecifier.prototype; // instanceof
+
+  function FormatSpecifier(specifier) {
+    if (!(match = re.exec(specifier))) throw new Error("invalid format: " + specifier);
+
+    var match,
+        fill = match[1] || " ",
+        align = match[2] || ">",
+        sign = match[3] || "-",
+        symbol = match[4] || "",
+        zero = !!match[5],
+        width = match[6] && +match[6],
+        comma = !!match[7],
+        precision = match[8] && +match[8].slice(1),
+        type = match[9] || "";
+
+    // The "n" type is an alias for ",g".
+    if (type === "n") comma = true, type = "g";
+
+    // Map invalid types to the default format.
+    else if (!formatTypes[type]) type = "";
+
+    // If zero fill is specified, padding goes after sign and before digits.
+    if (zero || fill === "0" && align === "=") zero = true, fill = "0", align = "=";
+
+    this.fill = fill;
+    this.align = align;
+    this.sign = sign;
+    this.symbol = symbol;
+    this.zero = zero;
+    this.width = width;
+    this.comma = comma;
+    this.precision = precision;
+    this.type = type;
+  }
+
+  FormatSpecifier.prototype.toString = function () {
+    return this.fill + this.align + this.sign + this.symbol + (this.zero ? "0" : "") + (this.width == null ? "" : Math.max(1, this.width | 0)) + (this.comma ? "," : "") + (this.precision == null ? "" : "." + Math.max(0, this.precision | 0)) + this.type;
+  };
+
+  var identity = function identity(x) {
+    return x;
+  };
+
+  var prefixes = ["y", "z", "a", "f", "p", "n", "µ", "m", "", "k", "M", "G", "T", "P", "E", "Z", "Y"];
+
+  var formatLocale = function formatLocale(locale) {
+    var group = locale.grouping && locale.thousands ? formatGroup(locale.grouping, locale.thousands) : identity,
+        currency = locale.currency,
+        decimal = locale.decimal,
+        numerals = locale.numerals ? formatNumerals(locale.numerals) : identity,
+        percent = locale.percent || "%";
+
+    function newFormat(specifier) {
+      specifier = formatSpecifier(specifier);
+
+      var fill = specifier.fill,
+          align = specifier.align,
+          sign = specifier.sign,
+          symbol = specifier.symbol,
+          zero = specifier.zero,
+          width = specifier.width,
+          comma = specifier.comma,
+          precision = specifier.precision,
+          type = specifier.type;
+
+      // Compute the prefix and suffix.
+      // For SI-prefix, the suffix is lazily computed.
+      var prefix = symbol === "$" ? currency[0] : symbol === "#" && /[boxX]/.test(type) ? "0" + type.toLowerCase() : "",
+          suffix = symbol === "$" ? currency[1] : /[%p]/.test(type) ? percent : "";
+
+      // What format function should we use?
+      // Is this an integer type?
+      // Can this type generate exponential notation?
+      var formatType = formatTypes[type],
+          maybeSuffix = !type || /[defgprs%]/.test(type);
+
+      // Set the default precision if not specified,
+      // or clamp the specified precision to the supported range.
+      // For significant precision, it must be in [1, 21].
+      // For fixed precision, it must be in [0, 20].
+      precision = precision == null ? type ? 6 : 12 : /[gprs]/.test(type) ? Math.max(1, Math.min(21, precision)) : Math.max(0, Math.min(20, precision));
+
+      function format(value) {
+        var valuePrefix = prefix,
+            valueSuffix = suffix,
+            i,
+            n,
+            c;
+
+        if (type === "c") {
+          valueSuffix = formatType(value) + valueSuffix;
+          value = "";
+        } else {
+          value = +value;
+
+          // Perform the initial formatting.
+          var valueNegative = value < 0;
+          value = formatType(Math.abs(value), precision);
+
+          // If a negative value rounds to zero during formatting, treat as positive.
+          if (valueNegative && +value === 0) valueNegative = false;
+
+          // Compute the prefix and suffix.
+          valuePrefix = (valueNegative ? sign === "(" ? sign : "-" : sign === "-" || sign === "(" ? "" : sign) + valuePrefix;
+          valueSuffix = (type === "s" ? prefixes[8 + prefixExponent / 3] : "") + valueSuffix + (valueNegative && sign === "(" ? ")" : "");
+
+          // Break the formatted value into the integer “value” part that can be
+          // grouped, and fractional or exponential “suffix” part that is not.
+          if (maybeSuffix) {
+            i = -1, n = value.length;
+            while (++i < n) {
+              if (c = value.charCodeAt(i), 48 > c || c > 57) {
+                valueSuffix = (c === 46 ? decimal + value.slice(i + 1) : value.slice(i)) + valueSuffix;
+                value = value.slice(0, i);
+                break;
+              }
+            }
+          }
+        }
+
+        // If the fill character is not "0", grouping is applied before padding.
+        if (comma && !zero) value = group(value, Infinity);
+
+        // Compute the padding.
+        var length = valuePrefix.length + value.length + valueSuffix.length,
+            padding = length < width ? new Array(width - length + 1).join(fill) : "";
+
+        // If the fill character is "0", grouping is applied after padding.
+        if (comma && zero) value = group(padding + value, padding.length ? width - valueSuffix.length : Infinity), padding = "";
+
+        // Reconstruct the final output based on the desired alignment.
+        switch (align) {
+          case "<":
+            value = valuePrefix + value + valueSuffix + padding;break;
+          case "=":
+            value = valuePrefix + padding + value + valueSuffix;break;
+          case "^":
+            value = padding.slice(0, length = padding.length >> 1) + valuePrefix + value + valueSuffix + padding.slice(length);break;
+          default:
+            value = padding + valuePrefix + value + valueSuffix;break;
+        }
+
+        return numerals(value);
+      }
+
+      format.toString = function () {
+        return specifier + "";
+      };
+
+      return format;
+    }
+
+    function formatPrefix(specifier, value) {
+      var f = newFormat((specifier = formatSpecifier(specifier), specifier.type = "f", specifier)),
+          e = Math.max(-8, Math.min(8, Math.floor(exponent(value) / 3))) * 3,
+          k = Math.pow(10, -e),
+          prefix = prefixes[8 + e / 3];
+      return function (value) {
+        return f(k * value) + prefix;
+      };
+    }
+
+    return {
+      format: newFormat,
+      formatPrefix: formatPrefix
+    };
+  };
+
+  var locale;
+
+  defaultLocale({
+    decimal: ".",
+    thousands: ",",
+    grouping: [3],
+    currency: ["$", ""]
+  });
+
+  function defaultLocale(definition) {
+    locale = formatLocale(definition);
+    exports.format = locale.format;
+    exports.formatPrefix = locale.formatPrefix;
+    return locale;
+  }
+
+  var precisionFixed = function precisionFixed(step) {
+    return Math.max(0, -exponent(Math.abs(step)));
+  };
+
+  var precisionPrefix = function precisionPrefix(step, value) {
+    return Math.max(0, Math.max(-8, Math.min(8, Math.floor(exponent(value) / 3))) * 3 - exponent(Math.abs(step)));
+  };
+
+  var precisionRound = function precisionRound(step, max) {
+    step = Math.abs(step), max = Math.abs(max) - step;
+    return Math.max(0, exponent(max) - exponent(step)) + 1;
+  };
+
+  exports.formatDefaultLocale = defaultLocale;
+  exports.formatLocale = formatLocale;
+  exports.formatSpecifier = formatSpecifier;
+  exports.precisionFixed = precisionFixed;
+  exports.precisionPrefix = precisionPrefix;
+  exports.precisionRound = precisionRound;
+
+  Object.defineProperty(exports, '__esModule', { value: true });
+});
+
+},{}],"/Users/kathryn/Projects/Idyll-Process-Chain/node_modules/define-properties/index.js":[function(require,module,exports){
 'use strict';
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
@@ -1247,6 +1728,310 @@ module.exports = function ToPrimitive(input, PreferredType) {
 
 },{"./helpers/isPrimitive":"/Users/kathryn/Projects/Idyll-Process-Chain/node_modules/es-to-primitive/helpers/isPrimitive.js","is-callable":"/Users/kathryn/Projects/Idyll-Process-Chain/node_modules/is-callable/index.js","is-date-object":"/Users/kathryn/Projects/Idyll-Process-Chain/node_modules/is-date-object/index.js","is-symbol":"/Users/kathryn/Projects/Idyll-Process-Chain/node_modules/is-symbol/index.js"}],"/Users/kathryn/Projects/Idyll-Process-Chain/node_modules/es-to-primitive/helpers/isPrimitive.js":[function(require,module,exports){
 arguments[4]["/Users/kathryn/Projects/Idyll-Process-Chain/node_modules/es-abstract/helpers/isPrimitive.js"][0].apply(exports,arguments)
+},{}],"/Users/kathryn/Projects/Idyll-Process-Chain/node_modules/events/events.js":[function(require,module,exports){
+// Copyright Joyent, Inc. and other Node contributors.
+//
+// Permission is hereby granted, free of charge, to any person obtaining a
+// copy of this software and associated documentation files (the
+// "Software"), to deal in the Software without restriction, including
+// without limitation the rights to use, copy, modify, merge, publish,
+// distribute, sublicense, and/or sell copies of the Software, and to permit
+// persons to whom the Software is furnished to do so, subject to the
+// following conditions:
+//
+// The above copyright notice and this permission notice shall be included
+// in all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+// OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
+// NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+// USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+function EventEmitter() {
+  this._events = this._events || {};
+  this._maxListeners = this._maxListeners || undefined;
+}
+module.exports = EventEmitter;
+
+// Backwards-compat with node 0.10.x
+EventEmitter.EventEmitter = EventEmitter;
+
+EventEmitter.prototype._events = undefined;
+EventEmitter.prototype._maxListeners = undefined;
+
+// By default EventEmitters will print a warning if more than 10 listeners are
+// added to it. This is a useful default which helps finding memory leaks.
+EventEmitter.defaultMaxListeners = 10;
+
+// Obviously not all Emitters should be limited to 10. This function allows
+// that to be increased. Set to zero for unlimited.
+EventEmitter.prototype.setMaxListeners = function(n) {
+  if (!isNumber(n) || n < 0 || isNaN(n))
+    throw TypeError('n must be a positive number');
+  this._maxListeners = n;
+  return this;
+};
+
+EventEmitter.prototype.emit = function(type) {
+  var er, handler, len, args, i, listeners;
+
+  if (!this._events)
+    this._events = {};
+
+  // If there is no 'error' event listener then throw.
+  if (type === 'error') {
+    if (!this._events.error ||
+        (isObject(this._events.error) && !this._events.error.length)) {
+      er = arguments[1];
+      if (er instanceof Error) {
+        throw er; // Unhandled 'error' event
+      } else {
+        // At least give some kind of context to the user
+        var err = new Error('Uncaught, unspecified "error" event. (' + er + ')');
+        err.context = er;
+        throw err;
+      }
+    }
+  }
+
+  handler = this._events[type];
+
+  if (isUndefined(handler))
+    return false;
+
+  if (isFunction(handler)) {
+    switch (arguments.length) {
+      // fast cases
+      case 1:
+        handler.call(this);
+        break;
+      case 2:
+        handler.call(this, arguments[1]);
+        break;
+      case 3:
+        handler.call(this, arguments[1], arguments[2]);
+        break;
+      // slower
+      default:
+        args = Array.prototype.slice.call(arguments, 1);
+        handler.apply(this, args);
+    }
+  } else if (isObject(handler)) {
+    args = Array.prototype.slice.call(arguments, 1);
+    listeners = handler.slice();
+    len = listeners.length;
+    for (i = 0; i < len; i++)
+      listeners[i].apply(this, args);
+  }
+
+  return true;
+};
+
+EventEmitter.prototype.addListener = function(type, listener) {
+  var m;
+
+  if (!isFunction(listener))
+    throw TypeError('listener must be a function');
+
+  if (!this._events)
+    this._events = {};
+
+  // To avoid recursion in the case that type === "newListener"! Before
+  // adding it to the listeners, first emit "newListener".
+  if (this._events.newListener)
+    this.emit('newListener', type,
+              isFunction(listener.listener) ?
+              listener.listener : listener);
+
+  if (!this._events[type])
+    // Optimize the case of one listener. Don't need the extra array object.
+    this._events[type] = listener;
+  else if (isObject(this._events[type]))
+    // If we've already got an array, just append.
+    this._events[type].push(listener);
+  else
+    // Adding the second element, need to change to array.
+    this._events[type] = [this._events[type], listener];
+
+  // Check for listener leak
+  if (isObject(this._events[type]) && !this._events[type].warned) {
+    if (!isUndefined(this._maxListeners)) {
+      m = this._maxListeners;
+    } else {
+      m = EventEmitter.defaultMaxListeners;
+    }
+
+    if (m && m > 0 && this._events[type].length > m) {
+      this._events[type].warned = true;
+      console.error('(node) warning: possible EventEmitter memory ' +
+                    'leak detected. %d listeners added. ' +
+                    'Use emitter.setMaxListeners() to increase limit.',
+                    this._events[type].length);
+      if (typeof console.trace === 'function') {
+        // not supported in IE 10
+        console.trace();
+      }
+    }
+  }
+
+  return this;
+};
+
+EventEmitter.prototype.on = EventEmitter.prototype.addListener;
+
+EventEmitter.prototype.once = function(type, listener) {
+  if (!isFunction(listener))
+    throw TypeError('listener must be a function');
+
+  var fired = false;
+
+  function g() {
+    this.removeListener(type, g);
+
+    if (!fired) {
+      fired = true;
+      listener.apply(this, arguments);
+    }
+  }
+
+  g.listener = listener;
+  this.on(type, g);
+
+  return this;
+};
+
+// emits a 'removeListener' event iff the listener was removed
+EventEmitter.prototype.removeListener = function(type, listener) {
+  var list, position, length, i;
+
+  if (!isFunction(listener))
+    throw TypeError('listener must be a function');
+
+  if (!this._events || !this._events[type])
+    return this;
+
+  list = this._events[type];
+  length = list.length;
+  position = -1;
+
+  if (list === listener ||
+      (isFunction(list.listener) && list.listener === listener)) {
+    delete this._events[type];
+    if (this._events.removeListener)
+      this.emit('removeListener', type, listener);
+
+  } else if (isObject(list)) {
+    for (i = length; i-- > 0;) {
+      if (list[i] === listener ||
+          (list[i].listener && list[i].listener === listener)) {
+        position = i;
+        break;
+      }
+    }
+
+    if (position < 0)
+      return this;
+
+    if (list.length === 1) {
+      list.length = 0;
+      delete this._events[type];
+    } else {
+      list.splice(position, 1);
+    }
+
+    if (this._events.removeListener)
+      this.emit('removeListener', type, listener);
+  }
+
+  return this;
+};
+
+EventEmitter.prototype.removeAllListeners = function(type) {
+  var key, listeners;
+
+  if (!this._events)
+    return this;
+
+  // not listening for removeListener, no need to emit
+  if (!this._events.removeListener) {
+    if (arguments.length === 0)
+      this._events = {};
+    else if (this._events[type])
+      delete this._events[type];
+    return this;
+  }
+
+  // emit removeListener for all listeners on all events
+  if (arguments.length === 0) {
+    for (key in this._events) {
+      if (key === 'removeListener') continue;
+      this.removeAllListeners(key);
+    }
+    this.removeAllListeners('removeListener');
+    this._events = {};
+    return this;
+  }
+
+  listeners = this._events[type];
+
+  if (isFunction(listeners)) {
+    this.removeListener(type, listeners);
+  } else if (listeners) {
+    // LIFO order
+    while (listeners.length)
+      this.removeListener(type, listeners[listeners.length - 1]);
+  }
+  delete this._events[type];
+
+  return this;
+};
+
+EventEmitter.prototype.listeners = function(type) {
+  var ret;
+  if (!this._events || !this._events[type])
+    ret = [];
+  else if (isFunction(this._events[type]))
+    ret = [this._events[type]];
+  else
+    ret = this._events[type].slice();
+  return ret;
+};
+
+EventEmitter.prototype.listenerCount = function(type) {
+  if (this._events) {
+    var evlistener = this._events[type];
+
+    if (isFunction(evlistener))
+      return 1;
+    else if (evlistener)
+      return evlistener.length;
+  }
+  return 0;
+};
+
+EventEmitter.listenerCount = function(emitter, type) {
+  return emitter.listenerCount(type);
+};
+
+function isFunction(arg) {
+  return typeof arg === 'function';
+}
+
+function isNumber(arg) {
+  return typeof arg === 'number';
+}
+
+function isObject(arg) {
+  return typeof arg === 'object' && arg !== null;
+}
+
+function isUndefined(arg) {
+  return arg === void 0;
+}
+
 },{}],"/Users/kathryn/Projects/Idyll-Process-Chain/node_modules/fbjs/lib/EventListener.js":[function(require,module,exports){
 'use strict';
 
@@ -2003,7 +2788,228 @@ module.exports = function (value, locale) {
   });
 };
 
-},{"no-case":"/Users/kathryn/Projects/Idyll-Process-Chain/node_modules/no-case/no-case.js","upper-case":"/Users/kathryn/Projects/Idyll-Process-Chain/node_modules/upper-case/upper-case.js"}],"/Users/kathryn/Projects/Idyll-Process-Chain/node_modules/idyll-document/dist/cjs/index.js":[function(require,module,exports){
+},{"no-case":"/Users/kathryn/Projects/Idyll-Process-Chain/node_modules/no-case/no-case.js","upper-case":"/Users/kathryn/Projects/Idyll-Process-Chain/node_modules/upper-case/upper-case.js"}],"/Users/kathryn/Projects/Idyll-Process-Chain/node_modules/idyll-apparatus-component/lib.js":[function(require,module,exports){
+'use strict';
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+var _createClass = function () {
+  function defineProperties(target, props) {
+    for (var i = 0; i < props.length; i++) {
+      var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ("value" in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);
+    }
+  }return function (Constructor, protoProps, staticProps) {
+    if (protoProps) defineProperties(Constructor.prototype, protoProps);if (staticProps) defineProperties(Constructor, staticProps);return Constructor;
+  };
+}();
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _littleLoader = require('little-loader');
+
+var _littleLoader2 = _interopRequireDefault(_littleLoader);
+
+var _events = require('events');
+
+var _events2 = _interopRequireDefault(_events);
+
+function _interopRequireDefault(obj) {
+  return obj && obj.__esModule ? obj : { default: obj };
+}
+
+function _defineProperty(obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });
+  } else {
+    obj[key] = value;
+  }return obj;
+}
+
+function _classCallCheck(instance, Constructor) {
+  if (!(instance instanceof Constructor)) {
+    throw new TypeError("Cannot call a class as a function");
+  }
+}
+
+function _possibleConstructorReturn(self, call) {
+  if (!self) {
+    throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+  }return call && ((typeof call === 'undefined' ? 'undefined' : _typeof(call)) === "object" || typeof call === "function") ? call : self;
+}
+
+function _inherits(subClass, superClass) {
+  if (typeof superClass !== "function" && superClass !== null) {
+    throw new TypeError("Super expression must either be null or a function, not " + (typeof superClass === 'undefined' ? 'undefined' : _typeof(superClass)));
+  }subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } });if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+}
+
+var emitter = new _events2.default();
+
+var scriptLoaded = false;
+var scriptLoading = false;
+
+//http://stackoverflow.com/questions/4588119/get-elements-css-selector-when-it-doesnt-have-an-id
+function fullPath(el) {
+  var names = [];
+  while (el.parentNode) {
+    if (el.id) {
+      names.unshift('#' + el.id);
+      break;
+    } else {
+      if (el == el.ownerDocument.documentElement) names.unshift(el.tagName);else {
+        for (var c = 1, e = el; e.previousElementSibling; e = e.previousElementSibling, c++) {}
+        names.unshift(el.tagName + ":nth-child(" + c + ")");
+      }
+      el = el.parentNode;
+    }
+  }
+  return names.join(" > ");
+}
+
+var Apparatus = function (_React$Component) {
+  _inherits(Apparatus, _React$Component);
+
+  function Apparatus(props) {
+    _classCallCheck(this, Apparatus);
+
+    var _this = _possibleConstructorReturn(this, (Apparatus.__proto__ || Object.getPrototypeOf(Apparatus)).call(this, props));
+
+    _this.state = {
+      viewer: null
+    };
+
+    _this.handleViewerRender = _this.handleViewerRender.bind(_this);
+    _this.handleRef = _this.handleRef.bind(_this);
+    return _this;
+  }
+
+  _createClass(Apparatus, [{
+    key: 'componentWillReceiveProps',
+    value: function componentWillReceiveProps(nextProps) {
+      var _this2 = this;
+
+      if (!this.state.viewer) {
+        return;
+      }
+      Object.keys(this.props).filter(function (d) {
+        return d.indexOf('_') !== 0;
+      }).filter(function (d) {
+        return ['error', 'children'].indexOf(d) === -1;
+      }).forEach(function (d) {
+        var currentValue = _this2.props[d];
+        var newValue = nextProps[d];
+        if (currentValue !== newValue) {
+          var attribute = _this2.state.viewer.getAttributeByLabel(d);
+          attribute.setExpression(newValue);
+        }
+      });
+    }
+  }, {
+    key: 'handleViewerRender',
+    value: function handleViewerRender() {
+      var _this3 = this;
+
+      Object.keys(this.props).filter(function (d) {
+        return d.indexOf('_') !== 0;
+      }).filter(function (d) {
+        return ['error', 'children'].indexOf(d) === -1;
+      }).forEach(function (d) {
+        var currentValue = _this3.props[d];
+        try {
+          var attribute = _this3.state.viewer.getAttributeByLabel(d);
+          var apparatusValue = attribute.value();
+          if (currentValue !== apparatusValue) {
+            _this3.props.updateProps(_defineProperty({}, d, apparatusValue));
+          }
+        } catch (e) {}
+      });
+    }
+  }, {
+    key: 'initializeViewer',
+    value: function initializeViewer() {
+      if (!this._ref || this.state.viewer) {
+        return;
+      }
+      console.log('initializing viewer');
+      console.log({
+        url: this.props._url,
+        selector: fullPath(this._ref),
+        regionOfInterest: this.props._regionOfInterest,
+        onRender: this.handleViewerRender
+      });
+      this.setState({
+        viewer: new ApparatusViewer({
+          url: this.props._url,
+          selector: fullPath(this._ref),
+          regionOfInterest: this.props._regionOfInterest,
+          onRender: this.handleViewerRender
+        })
+      });
+    }
+  }, {
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      var _this4 = this;
+
+      if (!scriptLoaded && !scriptLoading) {
+        scriptLoading = true;
+        (0, _littleLoader2.default)("https://rawgit.com/cdglabs/apparatus-site/gh-pages/editor/dist/apparatus-viewer.js", function (err) {
+          console.log('script loaded');
+          if (!err) {
+            console.log('no error');
+            scriptLoaded = true;
+            scriptLoading = false;
+            _this4.initializeViewer();
+            emitter.emit('scriptloaded');
+          }
+        });
+      } else if (scriptLoaded) {
+        this.initializeViewer();
+      } else {
+        emitter.on('scriptloaded', function () {
+          _this4.initializeViewer();
+        });
+      }
+    }
+  }, {
+    key: 'shouldComponentUpdate',
+    value: function shouldComponentUpdate() {
+      return false;
+    }
+  }, {
+    key: 'handleRef',
+    value: function handleRef(el) {
+      // console.log()
+      this._ref = el;
+      if (scriptLoaded) {
+        this.initializeViewer();
+      }
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var _this5 = this;
+
+      var _props = this.props,
+          className = _props.className,
+          _width = _props._width,
+          _height = _props._height,
+          style = _props.style;
+
+      return _react2.default.createElement('div', { ref: function ref(el) {
+          return _this5.handleRef(el);
+        }, className: className, style: Object.assign({ margin: '30px auto', width: _width ? _width : '100%', height: _height ? _height : 'auto' }, style) });
+    }
+  }]);
+
+  return Apparatus;
+}(_react2.default.Component);
+
+module.exports = Apparatus;
+
+},{"events":"/Users/kathryn/Projects/Idyll-Process-Chain/node_modules/events/events.js","little-loader":"/Users/kathryn/Projects/Idyll-Process-Chain/node_modules/little-loader/lib/little-loader.js","react":"/Users/kathryn/Projects/Idyll-Process-Chain/node_modules/react/index.js"}],"/Users/kathryn/Projects/Idyll-Process-Chain/node_modules/idyll-document/dist/cjs/index.js":[function(require,module,exports){
 'use strict';
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
@@ -3127,7 +4133,263 @@ module.exports = function (string, locale) {
   return upperCase(string, locale) === string;
 };
 
-},{"upper-case":"/Users/kathryn/Projects/Idyll-Process-Chain/node_modules/upper-case/upper-case.js"}],"/Users/kathryn/Projects/Idyll-Process-Chain/node_modules/lower-case-first/lower-case-first.js":[function(require,module,exports){
+},{"upper-case":"/Users/kathryn/Projects/Idyll-Process-Chain/node_modules/upper-case/upper-case.js"}],"/Users/kathryn/Projects/Idyll-Process-Chain/node_modules/little-loader/lib/little-loader.js":[function(require,module,exports){
+"use strict";
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+/**
+ * Script loading is difficult thanks to IE. We need callbacks to fire
+ * immediately following the script's execution, with no other scripts
+ * running in between. If other scripts on the page are able to run
+ * between our script and its callback, bad things can happen, such as
+ * `jQuery.noConflict` not being called in time, resulting in plugins
+ * latching onto our version of jQuery, etc.
+ *
+ * For IE<10 we use a relatively well-documented "preloading" strategy,
+ * which ensures that the script is ready to execute *before* appending
+ * it to the DOM. That way when it is finally appended, it is
+ * executed immediately.
+ *
+ * References:
+ * - http://www.html5rocks.com/en/tutorials/speed/script-loading/
+ * - http://blog.getify.com/ie11-please-bring-real-script-preloading-back/
+ * - https://github.com/jrburke/requirejs/issues/526
+ * - https://connect.microsoft.com/IE/feedback/details/729164/
+ *           ie10-dynamic-script-element-fires-loaded-readystate-prematurely
+ */
+(function () {
+
+  // Global state.
+  var pendingScripts = {};
+  var scriptCounter = 0;
+
+  /**
+   * Insert script into the DOM
+   *
+   * @param {Object} script Script DOM object
+   * @returns {void}
+   */
+  var _addScript = function _addScript(script) {
+    // Get the first script element, we're just going to use it
+    // as a reference for where to insert ours. Do NOT try to do
+    // this just once at the top and then re-use the same script
+    // as a reference later. Some weird loaders *remove* script
+    // elements after the browser has executed their contents,
+    // so the same reference might not have a parentNode later.
+    var firstScript = document.getElementsByTagName("script")[0];
+
+    // Append the script to the DOM, triggering execution.
+    firstScript.parentNode.insertBefore(script, firstScript);
+  };
+
+  /**
+   * Load Script.
+   *
+   * @param {String}            src       URI of script
+   * @param {Function|Object}   callback  (Optional) Called on script load completion,
+   *                                      or options object
+   * @param {Object}            context   (Optional) Callback context (`this`)
+   * @returns {void}
+   */
+  var _lload = function _lload(src, callback, context) {
+    /*eslint max-statements: [2, 32]*/
+    var setup;
+
+    if (callback && typeof callback !== "function") {
+      context = callback.context || context;
+      setup = callback.setup;
+      callback = callback.callback;
+    }
+
+    var script = document.createElement("script");
+    var done = false;
+    var err;
+    var _cleanup; // _must_ be set below.
+
+    /**
+     * Final handler for error or completion.
+     *
+     * **Note**: Will only be called _once_.
+     *
+     * @returns {void}
+     */
+    var _finish = function _finish() {
+      // Only call once.
+      if (done) {
+        return;
+      }
+      done = true;
+
+      // Internal cleanup.
+      _cleanup();
+
+      // Callback.
+      if (callback) {
+        callback.call(context, err);
+      }
+    };
+
+    /**
+     * Error handler
+     *
+     * @returns {void}
+     */
+    var _error = function _error() {
+      err = new Error(src || "EMPTY");
+      _finish();
+    };
+
+    if (script.readyState && !("async" in script)) {
+      /*eslint-disable consistent-return*/
+
+      // This section is only for IE<10. Some other old browsers may
+      // satisfy the above condition and enter this branch, but we don't
+      // support those browsers anyway.
+
+      var id = scriptCounter++;
+      var isReady = { loaded: true, complete: true };
+      var inserted = false;
+
+      // Clear out listeners, state.
+      _cleanup = function _cleanup() {
+        script.onreadystatechange = script.onerror = null;
+        pendingScripts[id] = void 0;
+      };
+
+      // Attach the handler before setting src, otherwise we might
+      // miss events (consider that IE could fire them synchronously
+      // upon setting src, for example).
+      script.onreadystatechange = function () {
+        var firstState = script.readyState;
+
+        // Protect against any errors from state change randomness.
+        if (err) {
+          return;
+        }
+
+        if (!inserted && isReady[firstState]) {
+          inserted = true;
+
+          // Append to DOM.
+          _addScript(script);
+        }
+
+        // --------------------------------------------------------------------
+        //                       GLORIOUS IE8 HACKAGE!!!
+        // --------------------------------------------------------------------
+        //
+        // Oh IE8, how you disappoint. IE8 won't call `script.onerror`, so
+        // we have to resort to drastic measures.
+        // See, e.g. http://www.quirksmode.org/dom/events/error.html#t02
+        //
+        // As with all things development, there's a Stack Overflow comment that
+        // asserts the following combinations of state changes in IE8 indicate a
+        // script load error. And crazily, it seems to work!
+        //
+        // http://stackoverflow.com/a/18840568/741892
+        //
+        // The `script.readyState` transitions we're interested are:
+        //
+        // * If state starts as `loaded`
+        // * Call `script.children`, which _should_ change state to `complete`
+        // * If state is now `loading`, then **we have a load error**
+        //
+        // For the reader's amusement, here is HeadJS's catalog of various
+        // `readyState` transitions in normal operation for IE:
+        // https://github.com/headjs/headjs/blob/master/src/2.0.0/load.js#L379-L419
+        if (firstState === "loaded") {
+          // The act of accessing the property should change the script's
+          // `readyState`.
+          //
+          // And, oh yeah, this hack is so hacky-ish we need the following
+          // eslint disable...
+          /*eslint-disable no-unused-expressions*/
+          script.children;
+          /*eslint-enable no-unused-expressions*/
+
+          if (script.readyState === "loading") {
+            // State transitions indicate we've hit the load error.
+            //
+            // **Note**: We are not intending to _return_ a value, just have
+            // a shorter short-circuit code path here.
+            return _error();
+          }
+        }
+
+        // It's possible for readyState to be "complete" immediately
+        // after we insert (and execute) the script in the branch
+        // above. So check readyState again here and react without
+        // waiting for another onreadystatechange.
+        if (script.readyState === "complete") {
+          _finish();
+        }
+      };
+
+      // Onerror handler _may_ work here.
+      script.onerror = _error;
+
+      // Since we're not appending the script to the DOM yet, the
+      // reference to our script element might get garbage collected
+      // when this function ends, without onreadystatechange ever being
+      // fired. This has been witnessed to happen. Adding it to
+      // `pendingScripts` ensures this can't happen.
+      pendingScripts[id] = script;
+
+      // call the setup callback to mutate the script tag
+      if (setup) {
+        setup.call(context, script);
+      }
+
+      // This triggers a request for the script, but its contents won't
+      // be executed until we append it to the DOM.
+      script.src = src;
+
+      // In some cases, the readyState is already "loaded" immediately
+      // after setting src. It's a lie! Don't append to the DOM until
+      // the onreadystatechange event says so.
+    } else {
+      // This section is for modern browsers, including IE10+.
+
+      // Clear out listeners.
+      _cleanup = function _cleanup() {
+        script.onload = script.onerror = null;
+      };
+
+      script.onerror = _error;
+      script.onload = _finish;
+      script.async = true;
+      script.charset = "utf-8";
+
+      // call the setup callback to mutate the script tag
+      if (setup) {
+        setup.call(context, script);
+      }
+
+      script.src = src;
+
+      // Append to DOM.
+      _addScript(script);
+    }
+  };
+
+  // UMD wrapper.
+  /*global define:false*/
+  if ((typeof exports === "undefined" ? "undefined" : _typeof(exports)) === "object" && (typeof module === "undefined" ? "undefined" : _typeof(module)) === "object") {
+    // CommonJS
+    module.exports = _lload;
+  } else if (typeof define === "function" && define.amd) {
+    // AMD
+    define([], function () {
+      return _lload;
+    });
+  } else {
+    // VanillaJS
+    window._lload = _lload;
+  }
+})();
+
+},{}],"/Users/kathryn/Projects/Idyll-Process-Chain/node_modules/lower-case-first/lower-case-first.js":[function(require,module,exports){
 'use strict';
 
 var lowerCase = require('lower-case');
@@ -10822,16 +12084,19 @@ var LANGUAGES = {
 },{}],"__IDYLL_AST__":[function(require,module,exports){
 "use strict";
 
-module.exports = [["Header", [["title", ["value", "Process Systems, Chains, and Lifecycles"]], ["subtitle", ["value", "An exploratory explanation of the architectural design of a visual framework for processes."]], ["author", ["value", "Kathryn Brusewitz"]], ["authorLink", ["value", "https://kathrynbrusewitz.github.io/"]]], []], ["h2", [], ["Managed Services"]], ["p", [], ["With IT driving all business operations, the significance of aligning managed IT services with all levels in an organization has grown to ensure meeting business goals. Businesses of all sizes and across all industries hire MSPs (Managed Service Providers) as an efficient way to stay up-to-date on technology, have access to skills and address isues related to cost, quality of service and risk."]], ["p", [], ["Bound by a contractual, service-level agreement with the client, MSPs assume the management and responsibility for providing a defined set of services that meet performance and quality metrics."]], ["p", [], ["Generally, MSPs provide dedicated support for IT infrastructure. Historically, services began with remote monitoring and management of servers and networks. Today, the scope of MSP services have expanded to include mobile device management, managed security, remote firewall administration and security-as-a-service, and managed print services."]], ["p", [], ["Growing IT infrastructure of enterprises, increasing number of compliances, and increasing adoption rate of cloud deployment by small and medium-sized businesses, are driving the growth of the managed services market. The managed services market size is expected to grow from an estimated $152.45 billion in 2017 to $267.84 billion by 2022."]], ["h2", [], ["Motivation"]], ["p", [], ["I work for Contuit, a four-person startup building a framework that centralizes integrations into one platform, brings MSPs together as a community, drives process maturity and enforces integrity."]], ["p", [], ["The purpose of this project is to explore the concept of a process maturity framework from scratch. How do we optimize processes? What do we need to know in order to make informed decisions when updating processes? How do we visualize the execution history of a process? How should we implement versioning of processes? How do we visualize version history so we can identify what works and what does not? How do we handle the concept of sub-processes and parallel processes?"]], ["p", [], ["These questions motivate the need to design a visual framework encompassing the system of relationships and histories between processes and executions."]], ["p", [], ["Why explore visualizations? Traditionally, engineers monitor and manage processes from a dashboard, typically viewing and acting on a host of processes in a list. This type of view stifles the evolution of processes. Processes are not always linear. As processes get more complex, depend on other integrations, and depend on even other processes and likewise is a dependency for others, managing and understanding them from a list becomes difficult."]], ["p", [], ["In an effort to explain my design choices, I do not just present the visual framework, but I walk through the architectural design process *", ["em", [], ["badum-tish"]], "* from which the framework came about. For the full list of components and their definitions, skip to the Appendix down below."]], ["h2", [], ["Process"]], ["p", [], ["We should start by defining what a process is."]], ["p", [], ["A process..."]], ["ul", [], [["li", [], ["Defines the steps to be completed"]], ["li", [], ["Must have at least one step"]], ["li", [], ["Must be executable itself"]]]], ["p", [], ["\nThe most basic process is linear."]], ["p", [], ["TODO: Process Component: Render a Linear Process"]], ["h2", [], ["Triggers and Dependencies"]], ["h2", [], ["Process Versioning and History"]], ["h2", [], ["Process Lifecycle"]], ["p", [], ["The following lifecycle demonstrates how updates to a process chain builds the version history of the process."]], ["p", [], ["We begin by defining Process 1, implicitly initializing Process Chain 1v1."]], ["p", [], ["We then define Process 2, implicitly initializing Process Chain 2v1."]], ["p", [], ["We then update Process 1 so that Step 2 triggers Process Chain 2v1. This saves as Process Chain 1v2."]], ["p", [], ["We then update Process 2. This saves as Process Chain 2v2."]], ["p", [], ["We then update Process 1 to instead use Process Chain 2v2. This saves a Process Chain 1v3."]], ["h2", [], ["Execution History"]], ["h2", [], ["Execution Breakdown"]], ["h2", [], ["Application View Flow"]], ["p", [], ["This section details my suggestion for designing the user experience within the framework. Beginning from the highest level of overview, the engineer drills down through components and sub-components of the process framework to reveal more specific details."]], ["h3", [], ["Process System"]], ["p", [], ["A more accurate, but more verbose, term for this view may be “System of Process Chains”. I call it a Process System for short."]], ["p", [], ["The Process System lays out all the Process Chains that have ever been defined, simplified into blocks. The focus is on the relationships drawn between different versions across all Processes. Each column is a Process, listing down the version history of that process."]], ["p", [], ["Visual cues can be applied to the blocks. Examples are:"]], ["ul", [], [["li", [], ["Mark deprecated (non-executable) versions by fading them or crossing them out."]], ["li", [], ["Mark Process Chains that are not meeting success criteria by shading them a different color."]]]], ["p", [], ["\nThis view can be enhanced by providing filter options to the user. Examples are:"]], ["ul", [], [["li", [], ["Filter out deprecated versions or available versions."]], ["li", [], ["Filter by attributes available in Process Chains, e.g. by execution metrics (engineers involved, execution frequency) and performance metrics."]], ["li", [], ["Filter for all Process Chains with a dependency on a given Process Chain."]], ["li", [], ["Filter for all Process Chains that trigger a given Process Chain."]]]], ["h3", [], ["Process Lifecycle"]], ["p", [], ["The Process Lifecycle is essentially the history of the process. It allows us to compare details and metrics between versions, where each version is a Process Chain."]], ["h3", [], ["Process Chain"]], ["p", [], ["A Process Chain is synonymous with a version of a process. It does not reveal the minute details of the steps, but rather gives a map of how steps relate to each other, both within the same process and with other processes."]], ["p", [], ["From here, we can drilldown into a specific Process."]], ["h3", [], ["Process"]], ["p", [], ["The Process shows us the steps in full detail while leaving out the relationships between steps. We leave that to the Process Chain to effectively visualize."]], ["p", [], ["The Process view is the most effective visualization for engineers to carry out process executions. It is also the most adaptable to an edit view."]], ["h2", [], ["Appendix"]], ["dl", [], [["dt", [], ["Process"]], ["dd", [], ["Defines the steps to be completed. Must have at least one step and must be executable itself. Has two states: Enabled and Deprecated."]], ["dt", [], ["Execution"]], ["dd", [], ["An instance of a process. Typically started by an engineer, by another process, or by an API call. Has three states: In-Progress, Finished (Success), Failed."]], ["dt", [], ["Step"]], ["dd", [], ["Must belong to a process. Can trigger the execution of one or more other processes. Cannot trigger the execution of its own process. Can depend on the completion of one or more steps in one or more other processes"]], ["dt", [], ["Process Chain"]], ["dd", [], ["A version of a process. Shows how steps relate to other steps within the same process and other processes."]]]]];
+module.exports = [["Header", [["title", ["value", "Process Systems, Chains, and Lifecycles"]], ["subtitle", ["value", "An exploratory explanation of the architectural design of a visual framework for processes."]], ["author", ["value", "Kathryn Brusewitz"]], ["authorLink", ["value", "https://kathrynbrusewitz.github.io/"]]], []], ["h2", [], ["Managed Services"]], ["p", [], ["With IT driving all business operations, the significance of aligning managed IT services with all levels in an organization has grown to ensure meeting business goals. Businesses of all sizes and across all industries hire MSPs (Managed Service Providers) as an efficient way to stay up-to-date on technology, have access to skills and address isues related to cost, quality of service and risk."]], ["p", [], ["Bound by a contractual, service-level agreement with the client, MSPs assume the management and responsibility for providing a defined set of services that meet performance and quality metrics."]], ["p", [], ["Generally, MSPs provide dedicated support for IT infrastructure. Historically, services began with remote monitoring and management of servers and networks. Today, the scope of MSP services have expanded to include mobile device management, managed security, remote firewall administration and security-as-a-service, and managed print services."]], ["p", [], ["Growing IT infrastructure of enterprises, increasing number of compliances, and increasing adoption rate of cloud deployment by small and medium-sized businesses, are driving the growth of the managed services market. The managed services market size is expected to grow from an estimated $152.45 billion in 2017 to $267.84 billion by 2022."]], ["h2", [], ["Motivation"]], ["p", [], ["I work for Contuit, a four-person startup building a framework that centralizes integrations into one platform, brings MSPs together as a community, drives process maturity and enforces integrity."]], ["p", [], ["The purpose of this project is to explore the concept of a process maturity framework from scratch. How do we optimize processes? What do we need to know in order to make informed decisions when updating processes? How do we visualize the execution history of a process? How should we implement versioning of processes? How do we visualize version history so we can identify what works and what does not? How do we handle the concept of sub-processes and parallel processes?"]], ["p", [], ["These questions motivate the need to design a visual framework encompassing the system of relationships and histories between processes and executions."]], ["p", [], ["Why explore visualizations? Traditionally, engineers monitor and manage processes from a dashboard, typically viewing and acting on a host of processes in a list. This type of view stifles the evolution of processes. Processes are not always linear. As processes get more complex, depend on other integrations, and depend on even other processes and likewise is a dependency for others, managing and understanding them from a list becomes difficult."]], ["p", [], ["In an effort to explain my design choices, I do not just present the visual framework, but I walk through the architectural design process *", ["em", [], ["badum-tish"]], "* from which the framework came about. For the full list of components and their definitions, skip to the Appendix down below."]], ["h2", [], ["Process"]], ["p", [], ["We should start by defining what a process is."]], ["p", [], ["A process..."]], ["ul", [], [["li", [], ["Defines the steps to be completed"]], ["li", [], ["Must have at least one step"]], ["li", [], ["Must be executable itself"]]]], ["p", [], ["\nThe most basic process is linear. ", ["var", [["name", ["value", "numSteps"]], ["value", ["value", 3]]], []]]], ["p", [], [["var", [["name", ["value", "roi"]], ["value", ["expression", "{ x: [-0.5, 6], y: [-0.5, 0.5] }"]]], []], ["Range", [["value", ["variable", "numSteps"]], ["min", ["value", 1]], ["max", ["value", 6]]], []], ["Display", [["var", ["variable", "numSteps"]], ["format", ["value", "d"]]], []], " Steps"]], ["IdyllApparatusComponent", [["_url", ["value", "components/LinearProcessChain.json"]], ["_regionOfInterest", ["variable", "roi"]], ["_width", ["value", 400]], ["_height", ["value", 60]], ["numSteps", ["variable", "numSteps"]]], []], ["h2", [], ["Triggers and Dependencies"]], ["h2", [], ["Process Versioning and History"]], ["h2", [], ["Process Lifecycle"]], ["p", [], ["The following lifecycle demonstrates how updates to a process chain builds the version history of the process."]], ["p", [], ["We begin by defining Process 1, implicitly initializing Process Chain 1v1."]], ["p", [], ["We then define Process 2, implicitly initializing Process Chain 2v1."]], ["p", [], ["We then update Process 1 so that Step 2 triggers Process Chain 2v1. This saves as Process Chain 1v2."]], ["p", [], ["We then update Process 2. This saves as Process Chain 2v2."]], ["p", [], ["We then update Process 1 to instead use Process Chain 2v2. This saves a Process Chain 1v3."]], ["h2", [], ["Execution History"]], ["h2", [], ["Execution Breakdown"]], ["h2", [], ["Application View Flow"]], ["p", [], ["This section details my suggestion for designing the user experience within the framework. Beginning from the highest level of overview, the engineer drills down through components and sub-components of the process framework to reveal more specific details."]], ["h3", [], ["Process System"]], ["p", [], ["A more accurate, but more verbose, term for this view may be “System of Process Chains”. I call it a Process System for short."]], ["p", [], ["The Process System lays out all the Process Chains that have ever been defined, simplified into blocks. The focus is on the relationships drawn between different versions across all Processes. Each column is a Process, listing down the version history of that process."]], ["p", [], ["Visual cues can be applied to the blocks. Examples are:"]], ["ul", [], [["li", [], ["Mark deprecated (non-executable) versions by fading them or crossing them out."]], ["li", [], ["Mark Process Chains that are not meeting success criteria by shading them a different color."]]]], ["p", [], ["\nThis view can be enhanced by providing filter options to the user. Examples are:"]], ["ul", [], [["li", [], ["Filter out deprecated versions or available versions."]], ["li", [], ["Filter by attributes available in Process Chains, e.g. by execution metrics (engineers involved, execution frequency) and performance metrics."]], ["li", [], ["Filter for all Process Chains with a dependency on a given Process Chain."]], ["li", [], ["Filter for all Process Chains that trigger a given Process Chain."]]]], ["h3", [], ["Process Lifecycle"]], ["p", [], ["The Process Lifecycle is essentially the history of the process. It allows us to compare details and metrics between versions, where each version is a Process Chain."]], ["h3", [], ["Process Chain"]], ["p", [], ["A Process Chain is synonymous with a version of a process. It does not reveal the minute details of the steps, but rather gives a map of how steps relate to each other, both within the same process and with other processes."]], ["p", [], ["From here, we can drilldown into a specific Process."]], ["h3", [], ["Process"]], ["p", [], ["The Process shows us the steps in full detail while leaving out the relationships between steps. We leave that to the Process Chain to effectively visualize."]], ["p", [], ["The Process view is the most effective visualization for engineers to carry out process executions. It is also the most adaptable to an edit view."]], ["h2", [], ["Appendix"]], ["dl", [], [["dt", [], ["Process"]], ["dd", [], ["Defines the steps to be completed. Must have at least one step and must be executable itself. Has two states: Enabled and Deprecated."]], ["dt", [], ["Execution"]], ["dd", [], ["An instance of a process. Typically started by an engineer, by another process, or by an API call. Has three states: In-Progress, Finished (Success), Failed."]], ["dt", [], ["Step"]], ["dd", [], ["Must belong to a process. Can trigger the execution of one or more other processes. Cannot trigger the execution of its own process. Can depend on the completion of one or more steps in one or more other processes"]], ["dt", [], ["Process Chain"]], ["dd", [], ["A version of a process. Shows how steps relate to other steps within the same process and other processes."]]]]];
 
 },{}],"__IDYLL_COMPONENTS__":[function(require,module,exports){
 'use strict';
 
 module.exports = {
-	'header': require('/Users/kathryn/Projects/Idyll-Process-Chain/components/default/header.js')
+	'header': require('/Users/kathryn/Projects/Idyll-Process-Chain/components/default/header.js'),
+	'range': require('/Users/kathryn/Projects/Idyll-Process-Chain/components/default/range.js'),
+	'display': require('/Users/kathryn/Projects/Idyll-Process-Chain/components/default/display.js'),
+	'idyll-apparatus-component': require('/Users/kathryn/Projects/Idyll-Process-Chain/node_modules/idyll-apparatus-component/lib.js')
 };
 
-},{"/Users/kathryn/Projects/Idyll-Process-Chain/components/default/header.js":"/Users/kathryn/Projects/Idyll-Process-Chain/components/default/header.js"}],"__IDYLL_DATA__":[function(require,module,exports){
+},{"/Users/kathryn/Projects/Idyll-Process-Chain/components/default/display.js":"/Users/kathryn/Projects/Idyll-Process-Chain/components/default/display.js","/Users/kathryn/Projects/Idyll-Process-Chain/components/default/header.js":"/Users/kathryn/Projects/Idyll-Process-Chain/components/default/header.js","/Users/kathryn/Projects/Idyll-Process-Chain/components/default/range.js":"/Users/kathryn/Projects/Idyll-Process-Chain/components/default/range.js","/Users/kathryn/Projects/Idyll-Process-Chain/node_modules/idyll-apparatus-component/lib.js":"/Users/kathryn/Projects/Idyll-Process-Chain/node_modules/idyll-apparatus-component/lib.js"}],"__IDYLL_DATA__":[function(require,module,exports){
 "use strict";
 
 module.exports = {};
