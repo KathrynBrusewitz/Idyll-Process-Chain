@@ -207,14 +207,14 @@
             "name": "Step 3",
             "triggers": [],
             "dependsOn": [],
-            "complete": true
+            "complete": false
           },
           {
             "step": 4,
             "name": "Step 4",
             "triggers": [],
             "dependsOn": [],
-            "complete": true
+            "complete": false
           }
         ]
       },

@@ -129,7 +129,11 @@ var BasicProcess = function (_D3Component) {
           if (d.complete) {
             return nodeColorComplete;
           } else {
-            return nodeColorIncomplete;
+            if (d.step === 1 || nodes[d.step - 2].complete) {
+              return nodeColorComplete;
+            } else {
+              return nodeColorIncomplete;
+            }
           }
         } else {
           return nodeColorLast;
@@ -139,7 +143,11 @@ var BasicProcess = function (_D3Component) {
           if (d.complete) {
             this.setAttribute("stroke", nodeColorComplete);
           } else {
-            this.setAttribute("stroke", nodeColorIncomplete);
+            if (d.step === 1 || nodes[d.step - 2].complete) {
+              this.setAttribute("stroke", nodeColorComplete);
+            } else {
+              this.setAttribute("stroke", nodeColorIncomplete);
+            }
           }
         } else {
           this.setAttribute("stroke", nodeColorLast);
@@ -355,7 +363,11 @@ var ProcessChain = function (_D3Component) {
             if (d.complete) {
               return nodeColorComplete;
             } else {
-              return nodeColorIncomplete;
+              if (d.step === 1 || nodes[d.step - 2].complete) {
+                return nodeColorComplete;
+              } else {
+                return nodeColorIncomplete;
+              }
             }
           } else {
             return nodeColorLast;
@@ -365,7 +377,11 @@ var ProcessChain = function (_D3Component) {
             if (d.complete) {
               this.setAttribute("stroke", nodeColorComplete);
             } else {
-              this.setAttribute("stroke", nodeColorIncomplete);
+              if (d.step === 1 || nodes[d.step - 2].complete) {
+                this.setAttribute("stroke", nodeColorComplete);
+              } else {
+                this.setAttribute("stroke", nodeColorIncomplete);
+              }
             }
           } else {
             this.setAttribute("stroke", nodeColorLast);
@@ -37690,7 +37706,7 @@ module.exports = {
 },{"/Users/kathryn/Projects/Idyll-Process-Chain/components/BasicProcess.js":"/Users/kathryn/Projects/Idyll-Process-Chain/components/BasicProcess.js","/Users/kathryn/Projects/Idyll-Process-Chain/components/ProcessChain.js":"/Users/kathryn/Projects/Idyll-Process-Chain/components/ProcessChain.js","/Users/kathryn/Projects/Idyll-Process-Chain/components/default/aside.js":"/Users/kathryn/Projects/Idyll-Process-Chain/components/default/aside.js","/Users/kathryn/Projects/Idyll-Process-Chain/components/default/button.js":"/Users/kathryn/Projects/Idyll-Process-Chain/components/default/button.js","/Users/kathryn/Projects/Idyll-Process-Chain/components/default/display.js":"/Users/kathryn/Projects/Idyll-Process-Chain/components/default/display.js","/Users/kathryn/Projects/Idyll-Process-Chain/components/default/header.js":"/Users/kathryn/Projects/Idyll-Process-Chain/components/default/header.js","/Users/kathryn/Projects/Idyll-Process-Chain/components/default/text-input.js":"/Users/kathryn/Projects/Idyll-Process-Chain/components/default/text-input.js"}],"__IDYLL_DATA__":[function(require,module,exports){
 "use strict";
 
-module.exports = { "linearSteps": [{ "step": 1, "name": "Step 1", "triggers": [], "dependsOn": [], "complete": true }], "processesABCD": [{ "process": 1, "name": "A", "versions": [{ "version": 1, "enabled": true, "steps": [{ "step": 1, "name": "Step 1", "triggers": [], "dependsOn": [], "complete": true }, { "step": 2, "name": "Step 2", "triggers": [], "dependsOn": [], "complete": true }, { "step": 3, "name": "Step 3", "triggers": [], "dependsOn": [], "complete": true }, { "step": 4, "name": "Step 4", "triggers": [], "dependsOn": [], "complete": true }, { "step": 5, "name": "Step 5", "triggers": [], "dependsOn": [], "complete": true }] }] }, { "process": 2, "name": "B", "versions": [{ "version": 1, "enabled": true, "steps": [{ "step": 1, "name": "Step 1", "triggers": [], "dependsOn": [], "complete": true }, { "step": 2, "name": "Step 2", "triggers": [], "dependsOn": [], "complete": true }, { "step": 3, "name": "Step 3", "triggers": [], "dependsOn": [], "complete": true }, { "step": 4, "name": "Step 4", "triggers": [], "dependsOn": [], "complete": true }] }, { "version": 2, "enabled": true, "steps": [{ "step": 1, "name": "Step 1", "triggers": [], "dependsOn": [], "complete": true }, { "step": 2, "name": "Step 2", "triggers": [], "dependsOn": [], "complete": true }, { "step": 3, "name": "Step 3", "triggers": [], "dependsOn": [], "complete": true }, { "step": 4, "name": "Step 4", "triggers": [], "dependsOn": [], "complete": true }] }] }, { "process": 3, "name": "C", "versions": [{ "version": 1, "enabled": true, "steps": [{ "step": 1, "name": "Step 1", "triggers": [], "dependsOn": [], "complete": true }, { "step": 2, "name": "Step 2", "triggers": [], "dependsOn": [], "complete": true }, { "step": 3, "name": "Step 3", "triggers": [], "dependsOn": [], "complete": true }] }, { "version": 2, "enabled": true, "steps": [{ "step": 1, "name": "Step 1", "triggers": [], "dependsOn": [], "complete": true }, { "step": 2, "name": "Step 2", "triggers": [], "dependsOn": [], "complete": true }, { "step": 3, "name": "Step 3", "triggers": [], "dependsOn": [], "complete": true }] }] }, { "process": 4, "name": "D", "versions": [{ "version": 1, "enabled": true, "steps": [{ "step": 1, "name": "Step 1", "triggers": [], "dependsOn": [], "complete": true }, { "step": 2, "name": "Step 2", "triggers": [], "dependsOn": [], "complete": true }, { "step": 3, "name": "Step 3", "triggers": [], "dependsOn": [], "complete": true }, { "step": 4, "name": "Step 4", "triggers": [], "dependsOn": [], "complete": true }] }, { "version": 2, "enabled": true, "steps": [{ "step": 1, "name": "Step 1", "triggers": [], "dependsOn": [], "complete": true }, { "step": 2, "name": "Step 2", "triggers": [], "dependsOn": [], "complete": true }, { "step": 3, "name": "Step 3", "triggers": [], "dependsOn": [], "complete": true }, { "step": 4, "name": "Step 4", "triggers": [], "dependsOn": [], "complete": true }] }] }] };
+module.exports = { "linearSteps": [{ "step": 1, "name": "Step 1", "triggers": [], "dependsOn": [], "complete": true }], "processesABCD": [{ "process": 1, "name": "A", "versions": [{ "version": 1, "enabled": true, "steps": [{ "step": 1, "name": "Step 1", "triggers": [], "dependsOn": [], "complete": true }, { "step": 2, "name": "Step 2", "triggers": [], "dependsOn": [], "complete": true }, { "step": 3, "name": "Step 3", "triggers": [], "dependsOn": [], "complete": true }, { "step": 4, "name": "Step 4", "triggers": [], "dependsOn": [], "complete": true }, { "step": 5, "name": "Step 5", "triggers": [], "dependsOn": [], "complete": true }] }] }, { "process": 2, "name": "B", "versions": [{ "version": 1, "enabled": true, "steps": [{ "step": 1, "name": "Step 1", "triggers": [], "dependsOn": [], "complete": true }, { "step": 2, "name": "Step 2", "triggers": [], "dependsOn": [], "complete": true }, { "step": 3, "name": "Step 3", "triggers": [], "dependsOn": [], "complete": true }, { "step": 4, "name": "Step 4", "triggers": [], "dependsOn": [], "complete": true }] }, { "version": 2, "enabled": true, "steps": [{ "step": 1, "name": "Step 1", "triggers": [], "dependsOn": [], "complete": true }, { "step": 2, "name": "Step 2", "triggers": [], "dependsOn": [], "complete": true }, { "step": 3, "name": "Step 3", "triggers": [], "dependsOn": [], "complete": true }, { "step": 4, "name": "Step 4", "triggers": [], "dependsOn": [], "complete": true }] }] }, { "process": 3, "name": "C", "versions": [{ "version": 1, "enabled": true, "steps": [{ "step": 1, "name": "Step 1", "triggers": [], "dependsOn": [], "complete": true }, { "step": 2, "name": "Step 2", "triggers": [], "dependsOn": [], "complete": true }, { "step": 3, "name": "Step 3", "triggers": [], "dependsOn": [], "complete": true }] }, { "version": 2, "enabled": true, "steps": [{ "step": 1, "name": "Step 1", "triggers": [], "dependsOn": [], "complete": true }, { "step": 2, "name": "Step 2", "triggers": [], "dependsOn": [], "complete": true }, { "step": 3, "name": "Step 3", "triggers": [], "dependsOn": [], "complete": true }] }] }, { "process": 4, "name": "D", "versions": [{ "version": 1, "enabled": true, "steps": [{ "step": 1, "name": "Step 1", "triggers": [], "dependsOn": [], "complete": true }, { "step": 2, "name": "Step 2", "triggers": [], "dependsOn": [], "complete": true }, { "step": 3, "name": "Step 3", "triggers": [], "dependsOn": [], "complete": false }, { "step": 4, "name": "Step 4", "triggers": [], "dependsOn": [], "complete": false }] }, { "version": 2, "enabled": true, "steps": [{ "step": 1, "name": "Step 1", "triggers": [], "dependsOn": [], "complete": true }, { "step": 2, "name": "Step 2", "triggers": [], "dependsOn": [], "complete": true }, { "step": 3, "name": "Step 3", "triggers": [], "dependsOn": [], "complete": true }, { "step": 4, "name": "Step 4", "triggers": [], "dependsOn": [], "complete": true }] }] }] };
 
 },{}],"__IDYLL_OPTS__":[function(require,module,exports){
 "use strict";

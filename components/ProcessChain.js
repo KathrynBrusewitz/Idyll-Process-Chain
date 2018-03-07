@@ -188,7 +188,11 @@ class ProcessChain extends D3Component {
             if (d.complete) {
               return nodeColorComplete;
             } else {
-              return nodeColorIncomplete;
+              if (d.step === 1 || nodes[d.step - 2].complete) {
+                return nodeColorComplete;
+              } else {
+                return nodeColorIncomplete;
+              }
             }
           } else {
             return nodeColorLast;
@@ -199,7 +203,11 @@ class ProcessChain extends D3Component {
             if (d.complete) {
               this.setAttribute("stroke", nodeColorComplete);
             } else {
-              this.setAttribute("stroke", nodeColorIncomplete);
+              if (d.step === 1 || nodes[d.step - 2].complete) {
+                this.setAttribute("stroke", nodeColorComplete);
+              } else {
+                this.setAttribute("stroke", nodeColorIncomplete);
+              }
             }
           } else {
             this.setAttribute("stroke", nodeColorLast);
