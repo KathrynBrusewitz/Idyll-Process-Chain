@@ -30,24 +30,17 @@ In an effort to explain my design choices, I do not just present the visual fram
 
 ## Process
 
-We should start by defining what a process is.
-
-A process...
-
-- Defines the steps to be completed
-- Must have at least one step
-- Must be executable itself
+A process defines the steps to be completed, must have at least one step, and must be executable itself.
 
 // Demo 1
 [data name:"linearSteps" source:"process-linear.json" /]
 [derived name:linearCurStep value:`linearSteps.length` /]
 [var name:linearStepName value:"" /]
 [Aside]
-  [Display value:"Process A" /]
-  [BasicProcess data:linearSteps /]
+  [BasicProcess data:linearSteps name:"Process A" /]
 [/Aside]
 
-The most basic process you can have is a linear one. Here is is a process called "Process A". Each node is a step and links to the next step in the sequence. The final node, colored dark, marks the end of the process. You can hover over the nodes to see their name. Currently this process has [Display value:linearCurStep format:"d" /] step(s). Try adding another step.
+The most basic process type is linear. Each node is a step and links to the next step in the sequence. The final node, colored dark, marks the end of the process. You can hover over the nodes to see their name. Currently this process has [Display value:linearCurStep format:"d" /] step(s). Try adding more steps.
 
 // Demo 1 input
 Step [Display value:`linearCurStep + 1` format:"d" /] Name: [TextInput value:linearStepName /]
@@ -55,30 +48,39 @@ Step [Display value:`linearCurStep + 1` format:"d" /] Name: [TextInput value:lin
 
 Naturally, we could expand on this by removing steps or by adding detailed instructions for every step, but for the purposes of this demo, we will keep it simple and only add step names.
 
-When an MSP engineer needs to start a process, they would execute it, which creates what we'll call an execution (or instance) of that process. Executions are typically started by an engineer, by another process, or by an API call. Tracking executions enables us to gather important process metrics, such as average completion times, automated steps that threw errors, step duration times, and so on.
-
-// Demo 2 input
-Let's create an execution of the process we just made. [Button onClick:`execSteps = linearSteps.slice().map(s => Object.assign({}, s, { "complete": false }))`]Execute Process[/Button]
+### Process Executions
 
 // Demo 2
 [var name:execSteps value:{} /]
 [Aside]
-  [Display value:"Process A Execution 1" /]
-  [BasicProcess data:execSteps /]
+  [BasicProcess data:execSteps name:"Process A Execution 1" /]
 [/Aside]
 
-Depending on how the steps were defined, the execution is completed either manually by the engineer or automatically by the system. Go ahead and complete a step: [Button onClick:`var foundIndex = execSteps.findIndex(s => !s.complete);
-if (foundIndex >= 0) {execSteps[foundIndex] = Object.assign(execSteps[foundIndex], {complete:true})}`]Complete Step[/Button] You can see the progress in the execution.
+When an MSP engineer needs to start a process, they would execute it. This action instantiates an execution of that process. Executions are typically started by an engineer, by another process, or by an API call. Tracking executions enables us to gather important process metrics, such as average completion times, which automated steps threw errors, step durations, and so on.
 
-Now consider a scenario where we have two processes: Process A and Process B.
+// Demo 2 input
+Let's create an execution of the process we just made. [Button onClick:`execSteps = linearSteps.slice().map(s => Object.assign({}, s, { "complete": false }))`]Execute Process[/Button]
 
+Depending on how the steps were defined, the execution is completed either manually by an engineer or automatically by the system. Go ahead and complete a step: [Button onClick:`var foundIndex = execSteps.findIndex(s => !s.complete);
+if (foundIndex >= 0) {execSteps[foundIndex] = Object.assign(execSteps[foundIndex], {complete:true})}`]Complete Step[/Button] You can see how it progresses through the process.
+
+### Multiple Processes
+
+// Demo 3
 [Aside]
-  [data name:"processesAB" source:"processes-a-b.json" /]
-  [ProcessChain data:processesAB versions:`[1,2]` /]
+  [data name:"processesABCD" source:"processes-abcd.json" /]
+  [ProcessChain data:processesABCD versions:`[1,1,1,1]` /]
 [/Aside]
 
+Now let's say we defined four processes: A, B, C and D.
 
-What if we want Step 2 in Process A to execute Process B? What if we don't want Step 4 to be completed until Step 3 in Process B is complete? We can handle these cases by defining relationships.
+What if we need Step 2 in Process A to always execute Process C?
+
+What if we don't want Step 4 in Process A to be completed until Process C is complete?
+
+What if Step 3 in Process B needs to execute Process D only in some cases?
+
+We can handle these cases by defining relationships.
 
 ## Triggers and Dependencies
 

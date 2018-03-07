@@ -11,31 +11,36 @@
             "step": 1,
             "name": "Step 1",
             "triggers": [],
-            "dependsOn": []
+            "dependsOn": [],
+            "complete": true
           },
           {
             "step": 2,
             "name": "Step 2",
             "triggers": [],
-            "dependsOn": []
+            "dependsOn": [],
+            "complete": true
           },
           {
             "step": 3,
             "name": "Step 3",
             "triggers": [],
-            "dependsOn": []
+            "dependsOn": [],
+            "complete": true
           },
           {
             "step": 4,
             "name": "Step 4",
             "triggers": [],
-            "dependsOn": []
+            "dependsOn": [],
+            "complete": true
           },
           {
             "step": 5,
             "name": "Step 5",
             "triggers": [],
-            "dependsOn": []
+            "dependsOn": [],
+            "complete": true
           }
         ]
       }
@@ -53,19 +58,22 @@
             "step": 1,
             "name": "Step 1",
             "triggers": [],
-            "dependsOn": []
+            "dependsOn": [],
+            "complete": true
           },
           {
             "step": 2,
             "name": "Step 2",
             "triggers": [],
-            "dependsOn": []
+            "dependsOn": [],
+            "complete": true
           },
           {
             "step": 3,
             "name": "Step 3",
             "triggers": [],
-            "dependsOn": []
+            "dependsOn": [],
+            "complete": true
           }
         ]
       },
@@ -77,25 +85,29 @@
             "step": 1,
             "name": "Step 1",
             "triggers": [],
-            "dependsOn": []
+            "dependsOn": [],
+            "complete": true
           },
           {
             "step": 2,
             "name": "Step 2",
             "triggers": [],
-            "dependsOn": []
+            "dependsOn": [],
+            "complete": true
           },
           {
             "step": 3,
             "name": "Step 3",
             "triggers": [],
-            "dependsOn": []
+            "dependsOn": [],
+            "complete": true
           },
           {
             "step": 4,
             "name": "Step 4",
             "triggers": [],
-            "dependsOn": []
+            "dependsOn": [],
+            "complete": true
           }
         ]
       }

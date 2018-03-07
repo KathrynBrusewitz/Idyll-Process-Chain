@@ -4,7 +4,7 @@ const d3 = require("d3");
 
 const width = 500,
   svgWidth = 600,
-  svgHeight = 200,
+  svgHeight = 100,
   nodeSize = 12,
   lineWidth = 10,
   nodeColorIncomplete = "#d8d8d8",
@@ -39,6 +39,7 @@ class BasicProcess extends D3Component {
 
   draw(props, clear) {
     // Get steps as nodes
+    var name = props.name || "";
     var nodes = props.data.slice(); // Creates shallow copy
     var lastNode = {
       step: nodes.length + 1,
@@ -52,7 +53,7 @@ class BasicProcess extends D3Component {
     // Create node locations
     nodes.map(function(d) {
       d["x"] = (d.step - 0.5) * xdist;
-      d["y"] = svgHeight / 3;
+      d["y"] = svgHeight / 2;
     });
 
     // Autogenerate links
@@ -70,6 +71,13 @@ class BasicProcess extends D3Component {
     if (clear) {
       this.svg.selectAll("*").remove();
     }
+
+    // Draw process names
+    var processName = this.svg
+      .append("text")
+      .attr("dx", nodes[0].x - 10)
+      .attr("dy", nodes[0].y - 30)
+      .text(name);
 
     // Draw links
     var link = this.svg

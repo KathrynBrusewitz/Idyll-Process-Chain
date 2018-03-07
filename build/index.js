@@ -15,7 +15,7 @@ var d3 = require("d3");
 
 var width = 500,
     svgWidth = 600,
-    svgHeight = 200,
+    svgHeight = 100,
     nodeSize = 12,
     lineWidth = 10,
     nodeColorIncomplete = "#d8d8d8",
@@ -64,6 +64,7 @@ var BasicProcess = function (_D3Component) {
     key: "draw",
     value: function draw(props, clear) {
       // Get steps as nodes
+      var name = props.name || "";
       var nodes = props.data.slice(); // Creates shallow copy
       var lastNode = {
         step: nodes.length + 1,
@@ -77,7 +78,7 @@ var BasicProcess = function (_D3Component) {
       // Create node locations
       nodes.map(function (d) {
         d["x"] = (d.step - 0.5) * xdist;
-        d["y"] = svgHeight / 3;
+        d["y"] = svgHeight / 2;
       });
 
       // Autogenerate links
@@ -93,6 +94,9 @@ var BasicProcess = function (_D3Component) {
       if (clear) {
         this.svg.selectAll("*").remove();
       }
+
+      // Draw process names
+      var processName = this.svg.append("text").attr("dx", nodes[0].x - 10).attr("dy", nodes[0].y - 30).text(name);
 
       // Draw links
       var link = this.svg.selectAll(".link").data(links).enter().append("line").attr("class", "link").attr("x1", function (d) {
@@ -175,8 +179,9 @@ var D3Component = require("idyll-d3-component");
 var d3 = require("d3");
 
 var width = 500,
+    height = 400,
     svgWidth = 600,
-    svgHeight = 200,
+    svgHeight = 500,
     nodeSize = 12,
     lineWidth = 10,
     nodeColorIncomplete = "#d8d8d8",
@@ -199,12 +204,12 @@ var ProcessChain = function (_D3Component) {
     value: function initialize(node, props) {
       console.log("initialize called");
       var svg = this.svg = d3.select(node).append("svg");
-      svg.style("width", svgWidth).style("height", svgHeight);
 
       if (this.validData(props)) {
         return false;
       }
 
+      this.updateSvgSize(props);
       this.draw(props, false);
     }
   }, {
@@ -235,6 +240,14 @@ var ProcessChain = function (_D3Component) {
         throw "ProcessChain requires version and data length to match.";
       }
     }
+  }, {
+    key: "updateSvgSize",
+    value: function updateSvgSize(props) {
+      var numProcesses = props.data.length;
+      height = 90 * numProcesses;
+      svgHeight = height;
+      this.svg.style("width", svgWidth).style("height", svgHeight);
+    }
 
     // For ProcessChain, we need just the specified versions
 
@@ -251,11 +264,21 @@ var ProcessChain = function (_D3Component) {
         });
       });
 
+      processes.forEach(function (process) {
+        var lastNode = {
+          step: process.steps.length + 1,
+          name: "Complete"
+        };
+        process.steps.push(lastNode);
+      });
+
       return processes;
     }
   }, {
     key: "draw",
     value: function draw(props, clear) {
+      var _this2 = this;
+
       console.log("draw called");
       if (clear) {
         this.svg.selectAll("*").remove();
@@ -268,9 +291,97 @@ var ProcessChain = function (_D3Component) {
       console.log("after reformatting:");
       console.log(data);
 
-      // How many rows do we need?
       var numRows = data.length;
       console.log(numRows);
+
+      data.forEach(function (process, iter) {
+        // Get steps as nodes
+        var nodes = process.steps;
+
+        // Calc distances between nodes
+        var xdist = width / nodes.length + 1;
+        var ydist = height / numRows + 1;
+
+        // Create node locations
+        nodes.map(function (d) {
+          d["x"] = (d.step - 0.5) * xdist;
+          d["y"] = (iter + 0.5) * ydist;
+        });
+
+        // Autogenerate links
+        var links = [];
+        nodes.map(function (d, i) {
+          if (d.name !== "Complete") {
+            links.push({ source: i, target: i + 1, complete: d.complete });
+          }
+        }).filter(function (d) {
+          return typeof d !== "undefined";
+        });
+
+        console.log(links);
+        console.log(nodes);
+
+        // Draw process names
+        var processName = _this2.svg.append("text").attr("dx", nodes[0].x - 10).attr("dy", nodes[0].y - 30).text(process.name);
+
+        // Draw links
+        var link = _this2.svg.selectAll(".link" + iter).data(links).enter().append("line").attr("class", "link").attr("x1", function (d) {
+          return nodes[d.source].x;
+        }).attr("y1", function (d) {
+          return nodes[d.source].y;
+        }).attr("x2", function (d) {
+          return nodes[d.target].x;
+        }).attr("y2", function (d) {
+          return nodes[d.target].y;
+        }).style("stroke", function (d) {
+          if (d.complete) {
+            return nodeColorComplete;
+          } else {
+            return nodeColorIncomplete;
+          }
+        });
+
+        // Draw nodes
+        var node = _this2.svg.selectAll(".node" + iter).data(nodes).enter().append("g").attr("transform", function (d) {
+          return "translate(" + d.x + "," + d.y + ")";
+        });
+
+        node.append("text").attr("class", "tooltip").attr("dx", "-.3em").attr("dy", "2em").attr("opacity", 0).text(function (d) {
+          return d.name;
+        });
+
+        var circle = node.append("circle").attr("class", "node").attr("r", nodeSize).style("fill", function (d) {
+          if (d.name !== "Complete") {
+            if (d.complete) {
+              return nodeColorComplete;
+            } else {
+              return nodeColorIncomplete;
+            }
+          } else {
+            return nodeColorLast;
+          }
+        }).on("mouseover", function (d) {
+          if (d.name !== "Complete") {
+            if (d.complete) {
+              this.setAttribute("stroke", nodeColorComplete);
+            } else {
+              this.setAttribute("stroke", nodeColorIncomplete);
+            }
+          } else {
+            this.setAttribute("stroke", nodeColorLast);
+          }
+          d3.select(this.parentNode).selectAll(".tooltip").attr("opacity", 1);
+        }).on("mouseout", function (d) {
+          this.setAttribute("stroke", "none");
+          d3.select(this.parentNode).selectAll(".tooltip").attr("opacity", 0);
+        });
+
+        node.append("text").attr("dx", "-.3em").attr("dy", ".3em").style("fill", "white").text(function (d) {
+          if (d.name !== "Complete") {
+            return d.step;
+          }
+        });
+      });
     }
   }]);
 
@@ -37561,7 +37672,7 @@ function extend() {
 },{}],"__IDYLL_AST__":[function(require,module,exports){
 "use strict";
 
-module.exports = [["Header", [["title", ["value", "Process Systems, Chains, and Lifecycles"]], ["subtitle", ["value", "An exploratory explanation for a visual and structural process framework."]], ["author", ["value", "Kathryn Brusewitz"]], ["authorLink", ["value", "https://kathrynbrusewitz.github.io/"]]], []], ["h2", [], ["Managed Services"]], ["p", [], ["With IT driving all business operations, the significance of aligning managed IT services with all levels in an organization has grown to ensure meeting business goals. Businesses of all sizes and across all industries hire MSPs (Managed Service Providers) as an efficient way to stay up-to-date on technology, have access to skills and address isues related to cost, quality of service and risk."]], ["p", [], ["Bound by a contractual, service-level agreement with the client, MSPs assume the management and responsibility for providing a defined set of services that meet performance and quality metrics."]], ["p", [], ["Generally, MSPs provide dedicated support for IT infrastructure. Historically, services began with remote monitoring and management of servers and networks. Today, the scope of MSP services have expanded to include mobile device management, managed security, remote firewall administration and security-as-a-service, and managed print services."]], ["p", [], ["Growing IT infrastructure of enterprises, increasing number of compliances, and increasing adoption rate of cloud deployment by small and medium-sized businesses, are driving the growth of the managed services market. The managed services market size is expected to grow from an estimated $152.45 billion in 2017 to $267.84 billion by 2022."]], ["h2", [], ["Motivation"]], ["p", [], ["I work for Contuit, a four-person startup building a framework that centralizes integrations into one platform, brings MSPs together as a community, drives process maturity and enforces integrity."]], ["p", [], ["The purpose of this project is to explore the concept of a process maturity framework from scratch. How do we optimize processes? What do we need to know in order to make informed decisions when updating processes? How do we visualize the execution history of a process? How should we implement versioning of processes? How do we visualize version history so we can identify what works and what does not? How do we handle the concept of sub-processes and parallel processes?"]], ["p", [], ["These questions motivate the need to design a robust framework that defines the structural and visual components needed to encompass a system of relationships and histories between processes and executions while maintaining logical integrity."]], ["p", [], ["Why explore visualizations? Traditionally, engineers monitor and manage processes from a dashboard, typically viewing and acting on a host of processes in a list. This type of view stifles the evolution of processes. Processes are not always linear. As processes get more complex, depend on other integrations, and depend on even other processes and likewise is a dependency for others, managing and understanding them from a list becomes difficult."]], ["p", [], ["In an effort to explain my design choices, I do not just present the visual framework, but I walk through the architectural design process *", ["em", [], ["badum-tish"]], "* from which the framework came about. For the full list of components and their definitions, skip to the Appendix down below."]], ["h2", [], ["Process"]], ["p", [], ["We should start by defining what a process is."]], ["p", [], ["A process..."]], ["ul", [], [["li", [], ["Defines the steps to be completed"]], ["li", [], ["Must have at least one step"]], ["li", [], ["Must be executable itself"]]]], ["data", [["name", ["value", "linearSteps"]], ["source", ["value", "process-linear.json"]]], []], ["derived", [["name", ["variable", "linearCurStep"]], ["value", ["expression", "linearSteps.length"]]], []], ["var", [["name", ["variable", "linearStepName"]], ["value", ["value", ""]]], []], ["Aside", [], [["Display", [["value", ["value", "Process A"]]], []], ["BasicProcess", [["data", ["variable", "linearSteps"]]], []]]], ["p", [], ["The most basic process you can have is a linear one. Here is is a process called “Process A”. Each node is a step and links to the next step in the sequence. The final node, colored dark, marks the end of the process. You can hover over the nodes to see their name. Currently this process has ", ["Display", [["value", ["variable", "linearCurStep"]], ["format", ["value", "d"]]], []], " step(s). Try adding another step."]], ["p", [], ["\nStep ", ["Display", [["value", ["expression", "linearCurStep + 1"]], ["format", ["value", "d"]]], []], " Name: ", ["TextInput", [["value", ["variable", "linearStepName"]]], []], ["Button", [["onClick", ["expression", "linearCurStep++; linearSteps.push({ \"step\": linearCurStep, \"name\": linearStepName, \"triggers\": [], \"dependsOn\": [], \"complete\": true })"]]], ["Add to Process"]]]], ["p", [], ["Naturally, we could expand on this by removing steps or by adding detailed instructions for every step, but for the purposes of this demo, we will keep it simple and only add step names."]], ["p", [], ["When an MSP engineer needs to start a process, they would execute it, which creates what we’ll call an execution (or instance) of that process. Executions are typically started by an engineer, by another process, or by an API call. Tracking executions enables us to gather important process metrics, such as average completion times, automated steps that threw errors, step duration times, and so on."]], ["p", [], ["\nLet’s create an execution of the process we just made. ", ["Button", [["onClick", ["expression", "execSteps = linearSteps.slice().map(s => Object.assign({}, s, { \"complete\": false }))"]]], ["Execute Process"]]]], ["var", [["name", ["variable", "execSteps"]], ["value", ["variable", "{}"]]], []], ["Aside", [], [["Display", [["value", ["value", "Process A Execution 1"]]], []], ["BasicProcess", [["data", ["variable", "execSteps"]]], []]]], ["p", [], ["Depending on how the steps were defined, the execution is completed either manually by the engineer or automatically by the system. Go ahead and complete a step: ", ["Button", [["onClick", ["expression", "var foundIndex = execSteps.findIndex(s => !s.complete);\nif (foundIndex >= 0) {execSteps[foundIndex] = Object.assign(execSteps[foundIndex], {complete:true})}"]]], ["Complete Step"]], " You can see the progress in the execution."]], ["p", [], ["Now consider a scenario where we have two processes: Process A and Process B."]], ["Aside", [], [["data", [["name", ["value", "processesAB"]], ["source", ["value", "processes-a-b.json"]]], []], ["ProcessChain", [["data", ["variable", "processesAB"]], ["versions", ["expression", "[1,2]"]]], []]]], ["p", [], ["What if we want Step 2 in Process A to execute Process B? What if we don’t want Step 4 to be completed until Step 3 in Process B is complete? We can handle these cases by defining relationships."]], ["h2", [], ["Triggers and Dependencies"]], ["p", [], ["There are two types of step relationships: triggers and dependencies."]], ["h2", [], ["Process Versioning and History"]], ["h2", [], ["Process Lifecycle"]], ["p", [], ["The following lifecycle demonstrates how updates to a process chain builds the version history of the process."]], ["p", [], ["We begin by defining Process 1, implicitly initializing Process Chain 1v1."]], ["p", [], ["We then define Process 2, implicitly initializing Process Chain 2v1."]], ["p", [], ["We then update Process 1 so that Step 2 triggers Process Chain 2v1. This saves as Process Chain 1v2."]], ["p", [], ["We then update Process 2. This saves as Process Chain 2v2."]], ["p", [], ["We then update Process 1 to instead use Process Chain 2v2. This saves a Process Chain 1v3."]], ["h2", [], ["Execution History"]], ["h2", [], ["Execution Breakdown"]], ["h2", [], ["Application View Flow"]], ["p", [], ["This section details my suggestion for designing the user experience within the framework. Beginning from the highest level of overview, the engineer drills down through components and sub-components of the process framework to reveal more specific details."]], ["h3", [], ["Process System"]], ["p", [], ["A more accurate, but more verbose, term for this view may be “System of Process Chains”. I call it a Process System for short."]], ["p", [], ["The Process System lays out all the Process Chains that have ever been defined, simplified into blocks. The focus is on the relationships drawn between different versions across all Processes. Each column is a Process, listing down the version history of that process."]], ["p", [], ["Visual cues can be applied to the blocks. Examples are:"]], ["ul", [], [["li", [], ["Mark deprecated (non-executable) versions by fading them or crossing them out."]], ["li", [], ["Mark Process Chains that are not meeting success criteria by shading them a different color."]]]], ["p", [], ["\nThis view can be enhanced by providing filter options to the user. Examples are:"]], ["ul", [], [["li", [], ["Filter out deprecated versions or available versions."]], ["li", [], ["Filter by attributes available in Process Chains, e.g. by execution metrics (engineers involved, execution frequency) and performance metrics."]], ["li", [], ["Filter for all Process Chains with a dependency on a given Process Chain."]], ["li", [], ["Filter for all Process Chains that trigger a given Process Chain."]]]], ["h3", [], ["Process Lifecycle"]], ["p", [], ["The Process Lifecycle is essentially the history of the process. It allows us to compare details and metrics between versions, where each version is a Process Chain."]], ["h3", [], ["Process Chain"]], ["p", [], ["A Process Chain is synonymous with a version of a process. It does not reveal the minute details of the steps, but rather gives a map of how steps relate to each other, both within the same process and with other processes."]], ["p", [], ["From here, we can drilldown into a specific Process."]], ["h3", [], ["Process"]], ["p", [], ["The Process shows us the steps in full detail while leaving out the relationships between steps. We leave that to the Process Chain to effectively visualize."]], ["p", [], ["The Process view is the most effective visualization for engineers to carry out process executions. It is also the most adaptable to an edit view."]], ["h2", [], ["Appendix"]], ["dl", [], [["dt", [], ["Process"]], ["dd", [], ["Defines the steps to be completed. Must have at least one step and must be executable itself. Has two states: Enabled and Deprecated."]], ["dt", [], ["Execution"]], ["dd", [], ["An instance of a process. Typically started by an engineer, by another process, or by an API call. Has three states: In-Progress, Finished (Success), Failed."]], ["dt", [], ["Step"]], ["dd", [], ["Must belong to a process. Can trigger the execution of one or more other processes. Cannot trigger the execution of its own process. Can depend on the completion of one or more steps in one or more other processes"]], ["dt", [], ["Process Chain"]], ["dd", [], ["A version of a process. Shows how steps relate to other steps within the same process and other processes."]]]]];
+module.exports = [["Header", [["title", ["value", "Process Systems, Chains, and Lifecycles"]], ["subtitle", ["value", "An exploratory explanation for a visual and structural process framework."]], ["author", ["value", "Kathryn Brusewitz"]], ["authorLink", ["value", "https://kathrynbrusewitz.github.io/"]]], []], ["h2", [], ["Managed Services"]], ["p", [], ["With IT driving all business operations, the significance of aligning managed IT services with all levels in an organization has grown to ensure meeting business goals. Businesses of all sizes and across all industries hire MSPs (Managed Service Providers) as an efficient way to stay up-to-date on technology, have access to skills and address isues related to cost, quality of service and risk."]], ["p", [], ["Bound by a contractual, service-level agreement with the client, MSPs assume the management and responsibility for providing a defined set of services that meet performance and quality metrics."]], ["p", [], ["Generally, MSPs provide dedicated support for IT infrastructure. Historically, services began with remote monitoring and management of servers and networks. Today, the scope of MSP services have expanded to include mobile device management, managed security, remote firewall administration and security-as-a-service, and managed print services."]], ["p", [], ["Growing IT infrastructure of enterprises, increasing number of compliances, and increasing adoption rate of cloud deployment by small and medium-sized businesses, are driving the growth of the managed services market. The managed services market size is expected to grow from an estimated $152.45 billion in 2017 to $267.84 billion by 2022."]], ["h2", [], ["Motivation"]], ["p", [], ["I work for Contuit, a four-person startup building a framework that centralizes integrations into one platform, brings MSPs together as a community, drives process maturity and enforces integrity."]], ["p", [], ["The purpose of this project is to explore the concept of a process maturity framework from scratch. How do we optimize processes? What do we need to know in order to make informed decisions when updating processes? How do we visualize the execution history of a process? How should we implement versioning of processes? How do we visualize version history so we can identify what works and what does not? How do we handle the concept of sub-processes and parallel processes?"]], ["p", [], ["These questions motivate the need to design a robust framework that defines the structural and visual components needed to encompass a system of relationships and histories between processes and executions while maintaining logical integrity."]], ["p", [], ["Why explore visualizations? Traditionally, engineers monitor and manage processes from a dashboard, typically viewing and acting on a host of processes in a list. This type of view stifles the evolution of processes. Processes are not always linear. As processes get more complex, depend on other integrations, and depend on even other processes and likewise is a dependency for others, managing and understanding them from a list becomes difficult."]], ["p", [], ["In an effort to explain my design choices, I do not just present the visual framework, but I walk through the architectural design process *", ["em", [], ["badum-tish"]], "* from which the framework came about. For the full list of components and their definitions, skip to the Appendix down below."]], ["h2", [], ["Process"]], ["p", [], ["A process defines the steps to be completed, must have at least one step, and must be executable itself."]], ["data", [["name", ["value", "linearSteps"]], ["source", ["value", "process-linear.json"]]], []], ["derived", [["name", ["variable", "linearCurStep"]], ["value", ["expression", "linearSteps.length"]]], []], ["var", [["name", ["variable", "linearStepName"]], ["value", ["value", ""]]], []], ["Aside", [], [["BasicProcess", [["data", ["variable", "linearSteps"]], ["name", ["value", "Process A"]]], []]]], ["p", [], ["The most basic process type is linear. Each node is a step and links to the next step in the sequence. The final node, colored dark, marks the end of the process. You can hover over the nodes to see their name. Currently this process has ", ["Display", [["value", ["variable", "linearCurStep"]], ["format", ["value", "d"]]], []], " step(s). Try adding more steps."]], ["p", [], ["\nStep ", ["Display", [["value", ["expression", "linearCurStep + 1"]], ["format", ["value", "d"]]], []], " Name: ", ["TextInput", [["value", ["variable", "linearStepName"]]], []], ["Button", [["onClick", ["expression", "linearCurStep++; linearSteps.push({ \"step\": linearCurStep, \"name\": linearStepName, \"triggers\": [], \"dependsOn\": [], \"complete\": true })"]]], ["Add to Process"]]]], ["p", [], ["Naturally, we could expand on this by removing steps or by adding detailed instructions for every step, but for the purposes of this demo, we will keep it simple and only add step names."]], ["h3", [], ["Process Executions"]], ["var", [["name", ["variable", "execSteps"]], ["value", ["variable", "{}"]]], []], ["Aside", [], [["BasicProcess", [["data", ["variable", "execSteps"]], ["name", ["value", "Process A Execution 1"]]], []]]], ["p", [], ["When an MSP engineer needs to start a process, they would execute it. This action instantiates an execution of that process. Executions are typically started by an engineer, by another process, or by an API call. Tracking executions enables us to gather important process metrics, such as average completion times, which automated steps threw errors, step durations, and so on."]], ["p", [], ["\nLet’s create an execution of the process we just made. ", ["Button", [["onClick", ["expression", "execSteps = linearSteps.slice().map(s => Object.assign({}, s, { \"complete\": false }))"]]], ["Execute Process"]]]], ["p", [], ["Depending on how the steps were defined, the execution is completed either manually by an engineer or automatically by the system. Go ahead and complete a step: ", ["Button", [["onClick", ["expression", "var foundIndex = execSteps.findIndex(s => !s.complete);\nif (foundIndex >= 0) {execSteps[foundIndex] = Object.assign(execSteps[foundIndex], {complete:true})}"]]], ["Complete Step"]], " You can see how it progresses through the process."]], ["h3", [], ["Multiple Processes"]], ["Aside", [], [["data", [["name", ["value", "processesABCD"]], ["source", ["value", "processes-abcd.json"]]], []], ["ProcessChain", [["data", ["variable", "processesABCD"]], ["versions", ["expression", "[1,1,1,1]"]]], []]]], ["p", [], ["Now let’s say we defined four processes: A, B, C and D."]], ["p", [], ["What if we need Step 2 in Process A to always execute Process C?"]], ["p", [], ["What if we don’t want Step 4 in Process A to be completed until Process C is complete?"]], ["p", [], ["What if Step 3 in Process B needs to execute Process D only in some cases?"]], ["p", [], ["We can handle these cases by defining relationships."]], ["h2", [], ["Triggers and Dependencies"]], ["p", [], ["There are two types of step relationships: triggers and dependencies."]], ["h2", [], ["Process Versioning and History"]], ["h2", [], ["Process Lifecycle"]], ["p", [], ["The following lifecycle demonstrates how updates to a process chain builds the version history of the process."]], ["p", [], ["We begin by defining Process 1, implicitly initializing Process Chain 1v1."]], ["p", [], ["We then define Process 2, implicitly initializing Process Chain 2v1."]], ["p", [], ["We then update Process 1 so that Step 2 triggers Process Chain 2v1. This saves as Process Chain 1v2."]], ["p", [], ["We then update Process 2. This saves as Process Chain 2v2."]], ["p", [], ["We then update Process 1 to instead use Process Chain 2v2. This saves a Process Chain 1v3."]], ["h2", [], ["Execution History"]], ["h2", [], ["Execution Breakdown"]], ["h2", [], ["Application View Flow"]], ["p", [], ["This section details my suggestion for designing the user experience within the framework. Beginning from the highest level of overview, the engineer drills down through components and sub-components of the process framework to reveal more specific details."]], ["h3", [], ["Process System"]], ["p", [], ["A more accurate, but more verbose, term for this view may be “System of Process Chains”. I call it a Process System for short."]], ["p", [], ["The Process System lays out all the Process Chains that have ever been defined, simplified into blocks. The focus is on the relationships drawn between different versions across all Processes. Each column is a Process, listing down the version history of that process."]], ["p", [], ["Visual cues can be applied to the blocks. Examples are:"]], ["ul", [], [["li", [], ["Mark deprecated (non-executable) versions by fading them or crossing them out."]], ["li", [], ["Mark Process Chains that are not meeting success criteria by shading them a different color."]]]], ["p", [], ["\nThis view can be enhanced by providing filter options to the user. Examples are:"]], ["ul", [], [["li", [], ["Filter out deprecated versions or available versions."]], ["li", [], ["Filter by attributes available in Process Chains, e.g. by execution metrics (engineers involved, execution frequency) and performance metrics."]], ["li", [], ["Filter for all Process Chains with a dependency on a given Process Chain."]], ["li", [], ["Filter for all Process Chains that trigger a given Process Chain."]]]], ["h3", [], ["Process Lifecycle"]], ["p", [], ["The Process Lifecycle is essentially the history of the process. It allows us to compare details and metrics between versions, where each version is a Process Chain."]], ["h3", [], ["Process Chain"]], ["p", [], ["A Process Chain is synonymous with a version of a process. It does not reveal the minute details of the steps, but rather gives a map of how steps relate to each other, both within the same process and with other processes."]], ["p", [], ["From here, we can drilldown into a specific Process."]], ["h3", [], ["Process"]], ["p", [], ["The Process shows us the steps in full detail while leaving out the relationships between steps. We leave that to the Process Chain to effectively visualize."]], ["p", [], ["The Process view is the most effective visualization for engineers to carry out process executions. It is also the most adaptable to an edit view."]], ["h2", [], ["Appendix"]], ["dl", [], [["dt", [], ["Process"]], ["dd", [], ["Defines the steps to be completed. Must have at least one step and must be executable itself. Has two states: Enabled and Deprecated."]], ["dt", [], ["Execution"]], ["dd", [], ["An instance of a process. Typically started by an engineer, by another process, or by an API call. Has three states: In-Progress, Finished (Success), Failed."]], ["dt", [], ["Step"]], ["dd", [], ["Must belong to a process. Can trigger the execution of one or more other processes. Cannot trigger the execution of its own process. Can depend on the completion of one or more steps in one or more other processes"]], ["dt", [], ["Process Chain"]], ["dd", [], ["A version of a process. Shows how steps relate to other steps within the same process and other processes."]]]]];
 
 },{}],"__IDYLL_COMPONENTS__":[function(require,module,exports){
 'use strict';
@@ -37569,8 +37680,8 @@ module.exports = [["Header", [["title", ["value", "Process Systems, Chains, and 
 module.exports = {
 	'header': require('/Users/kathryn/Projects/Idyll-Process-Chain/components/default/header.js'),
 	'aside': require('/Users/kathryn/Projects/Idyll-Process-Chain/components/default/aside.js'),
-	'display': require('/Users/kathryn/Projects/Idyll-Process-Chain/components/default/display.js'),
 	'basic-process': require('/Users/kathryn/Projects/Idyll-Process-Chain/components/BasicProcess.js'),
+	'display': require('/Users/kathryn/Projects/Idyll-Process-Chain/components/default/display.js'),
 	'text-input': require('/Users/kathryn/Projects/Idyll-Process-Chain/components/default/text-input.js'),
 	'button': require('/Users/kathryn/Projects/Idyll-Process-Chain/components/default/button.js'),
 	'process-chain': require('/Users/kathryn/Projects/Idyll-Process-Chain/components/ProcessChain.js')
@@ -37579,7 +37690,7 @@ module.exports = {
 },{"/Users/kathryn/Projects/Idyll-Process-Chain/components/BasicProcess.js":"/Users/kathryn/Projects/Idyll-Process-Chain/components/BasicProcess.js","/Users/kathryn/Projects/Idyll-Process-Chain/components/ProcessChain.js":"/Users/kathryn/Projects/Idyll-Process-Chain/components/ProcessChain.js","/Users/kathryn/Projects/Idyll-Process-Chain/components/default/aside.js":"/Users/kathryn/Projects/Idyll-Process-Chain/components/default/aside.js","/Users/kathryn/Projects/Idyll-Process-Chain/components/default/button.js":"/Users/kathryn/Projects/Idyll-Process-Chain/components/default/button.js","/Users/kathryn/Projects/Idyll-Process-Chain/components/default/display.js":"/Users/kathryn/Projects/Idyll-Process-Chain/components/default/display.js","/Users/kathryn/Projects/Idyll-Process-Chain/components/default/header.js":"/Users/kathryn/Projects/Idyll-Process-Chain/components/default/header.js","/Users/kathryn/Projects/Idyll-Process-Chain/components/default/text-input.js":"/Users/kathryn/Projects/Idyll-Process-Chain/components/default/text-input.js"}],"__IDYLL_DATA__":[function(require,module,exports){
 "use strict";
 
-module.exports = { "linearSteps": [{ "step": 1, "name": "Step 1", "triggers": [], "dependsOn": [], "complete": true }], "processesAB": [{ "process": 1, "name": "Process A", "versions": [{ "version": 1, "enabled": true, "steps": [{ "step": 1, "name": "Step 1", "triggers": [], "dependsOn": [] }, { "step": 2, "name": "Step 2", "triggers": [], "dependsOn": [] }, { "step": 3, "name": "Step 3", "triggers": [], "dependsOn": [] }, { "step": 4, "name": "Step 4", "triggers": [], "dependsOn": [] }, { "step": 5, "name": "Step 5", "triggers": [], "dependsOn": [] }] }] }, { "process": 2, "name": "Process B", "versions": [{ "version": 1, "enabled": true, "steps": [{ "step": 1, "name": "Step 1", "triggers": [], "dependsOn": [] }, { "step": 2, "name": "Step 2", "triggers": [], "dependsOn": [] }, { "step": 3, "name": "Step 3", "triggers": [], "dependsOn": [] }] }, { "version": 2, "enabled": true, "steps": [{ "step": 1, "name": "Step 1", "triggers": [], "dependsOn": [] }, { "step": 2, "name": "Step 2", "triggers": [], "dependsOn": [] }, { "step": 3, "name": "Step 3", "triggers": [], "dependsOn": [] }, { "step": 4, "name": "Step 4", "triggers": [], "dependsOn": [] }] }] }] };
+module.exports = { "linearSteps": [{ "step": 1, "name": "Step 1", "triggers": [], "dependsOn": [], "complete": true }], "processesABCD": [{ "process": 1, "name": "A", "versions": [{ "version": 1, "enabled": true, "steps": [{ "step": 1, "name": "Step 1", "triggers": [], "dependsOn": [], "complete": true }, { "step": 2, "name": "Step 2", "triggers": [], "dependsOn": [], "complete": true }, { "step": 3, "name": "Step 3", "triggers": [], "dependsOn": [], "complete": true }, { "step": 4, "name": "Step 4", "triggers": [], "dependsOn": [], "complete": true }, { "step": 5, "name": "Step 5", "triggers": [], "dependsOn": [], "complete": true }] }] }, { "process": 2, "name": "B", "versions": [{ "version": 1, "enabled": true, "steps": [{ "step": 1, "name": "Step 1", "triggers": [], "dependsOn": [], "complete": true }, { "step": 2, "name": "Step 2", "triggers": [], "dependsOn": [], "complete": true }, { "step": 3, "name": "Step 3", "triggers": [], "dependsOn": [], "complete": true }, { "step": 4, "name": "Step 4", "triggers": [], "dependsOn": [], "complete": true }] }, { "version": 2, "enabled": true, "steps": [{ "step": 1, "name": "Step 1", "triggers": [], "dependsOn": [], "complete": true }, { "step": 2, "name": "Step 2", "triggers": [], "dependsOn": [], "complete": true }, { "step": 3, "name": "Step 3", "triggers": [], "dependsOn": [], "complete": true }, { "step": 4, "name": "Step 4", "triggers": [], "dependsOn": [], "complete": true }] }] }, { "process": 3, "name": "C", "versions": [{ "version": 1, "enabled": true, "steps": [{ "step": 1, "name": "Step 1", "triggers": [], "dependsOn": [], "complete": true }, { "step": 2, "name": "Step 2", "triggers": [], "dependsOn": [], "complete": true }, { "step": 3, "name": "Step 3", "triggers": [], "dependsOn": [], "complete": true }] }, { "version": 2, "enabled": true, "steps": [{ "step": 1, "name": "Step 1", "triggers": [], "dependsOn": [], "complete": true }, { "step": 2, "name": "Step 2", "triggers": [], "dependsOn": [], "complete": true }, { "step": 3, "name": "Step 3", "triggers": [], "dependsOn": [], "complete": true }] }] }, { "process": 4, "name": "D", "versions": [{ "version": 1, "enabled": true, "steps": [{ "step": 1, "name": "Step 1", "triggers": [], "dependsOn": [], "complete": true }, { "step": 2, "name": "Step 2", "triggers": [], "dependsOn": [], "complete": true }, { "step": 3, "name": "Step 3", "triggers": [], "dependsOn": [], "complete": true }, { "step": 4, "name": "Step 4", "triggers": [], "dependsOn": [], "complete": true }] }, { "version": 2, "enabled": true, "steps": [{ "step": 1, "name": "Step 1", "triggers": [], "dependsOn": [], "complete": true }, { "step": 2, "name": "Step 2", "triggers": [], "dependsOn": [], "complete": true }, { "step": 3, "name": "Step 3", "triggers": [], "dependsOn": [], "complete": true }, { "step": 4, "name": "Step 4", "triggers": [], "dependsOn": [], "complete": true }] }] }] };
 
 },{}],"__IDYLL_OPTS__":[function(require,module,exports){
 "use strict";
