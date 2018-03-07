@@ -1,5 +1,5 @@
-import React from 'react';
-const ReactDOM = require('react-dom');
+import React from "react";
+const ReactDOM = require("react-dom");
 
 class TextInput extends React.PureComponent {
   constructor(props) {
@@ -12,9 +12,7 @@ class TextInput extends React.PureComponent {
   }
 
   render() {
-    return (
-      <input type="text" onChange={this.onChange} {...this.props} />
-    );
+    return <input type="text" onChange={this.onChange} {...this.props} />;
   }
 }
 

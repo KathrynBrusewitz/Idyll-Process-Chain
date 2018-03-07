@@ -1,0 +1,9 @@
+[
+  {
+    "step": 1,
+    "name": "Step 1",
+    "triggers": [],
+    "dependsOn": [],
+    "complete": true
+  }
+]

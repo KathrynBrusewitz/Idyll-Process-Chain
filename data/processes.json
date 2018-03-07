@@ -1,253 +1,257 @@
 [
   {
     "process": 1,
-    "version": 1,
     "name": "Process A",
-    "enabled": true,
-    "steps": [
+    "versions": [
       {
-        "step": 1,
-        "name": "Step 1",
-        "triggers": [],
-        "dependsOn": []
-      },
-      {
-        "step": 2,
-        "name": "Step 2",
-        "triggers": [],
-        "dependsOn": []
-      },
-      {
-        "step": 3,
-        "name": "Step 3",
-        "triggers": [],
-        "dependsOn": []
-      },
-      {
-        "step": 4,
-        "name": "Step 4",
-        "triggers": [],
-        "dependsOn": []
-      },
-      {
-        "step": 5,
-        "name": "Step 5",
-        "triggers": [],
-        "dependsOn": []
-      }
-    ]
-  },
-  {
-    "process": 1,
-    "version": 2,
-    "name": "Process A",
-    "enabled": true,
-    "steps": [
-      {
-        "step": 1,
-        "name": "Step 1",
-        "triggers": [
+        "version": 1,
+        "enabled": true,
+        "steps": [
           {
-            "process": 2,
-            "version": 1
-          }
-        ],
-        "dependsOn": []
-      },
-      {
-        "step": 2,
-        "name": "Step 2",
-        "triggers": [],
-        "dependsOn": []
-      },
-      {
-        "step": 3,
-        "name": "Step 3",
-        "triggers": [],
-        "dependsOn": []
-      },
-      {
-        "step": 4,
-        "name": "Step 4",
-        "triggers": [],
-        "dependsOn": [
+            "step": 1,
+            "name": "Step 1",
+            "triggers": [],
+            "dependsOn": []
+          },
           {
-            "process": 2,
-            "version": 1,
-            "step": 5
+            "step": 2,
+            "name": "Step 2",
+            "triggers": [],
+            "dependsOn": []
+          },
+          {
+            "step": 3,
+            "name": "Step 3",
+            "triggers": [],
+            "dependsOn": []
+          },
+          {
+            "step": 4,
+            "name": "Step 4",
+            "triggers": [],
+            "dependsOn": []
+          },
+          {
+            "step": 5,
+            "name": "Step 5",
+            "triggers": [],
+            "dependsOn": []
           }
         ]
       },
       {
-        "step": 5,
-        "name": "Step 5",
-        "triggers": [],
-        "dependsOn": []
-      }
-    ]
-  },
-  {
-    "process": 1,
-    "version": 3,
-    "name": "Process A",
-    "enabled": true,
-    "steps": [
-      {
-        "step": 1,
-        "name": "Step 1",
-        "triggers": [
+        "version": 2,
+        "enabled": true,
+        "steps": [
           {
-            "process": 2,
-            "version": 2
-          }
-        ],
-        "dependsOn": []
-      },
-      {
-        "step": 2,
-        "name": "Step 2",
-        "triggers": [],
-        "dependsOn": []
-      },
-      {
-        "step": 3,
-        "name": "Step 3",
-        "triggers": [],
-        "dependsOn": []
-      },
-      {
-        "step": 4,
-        "name": "Step 4",
-        "triggers": [],
-        "dependsOn": [
+            "step": 1,
+            "name": "Step 1",
+            "triggers": [
+              {
+                "process": 2,
+                "version": 1
+              }
+            ],
+            "dependsOn": []
+          },
           {
-            "process": 2,
-            "version": 2,
-            "step": 3
+            "step": 2,
+            "name": "Step 2",
+            "triggers": [],
+            "dependsOn": []
+          },
+          {
+            "step": 3,
+            "name": "Step 3",
+            "triggers": [],
+            "dependsOn": []
+          },
+          {
+            "step": 4,
+            "name": "Step 4",
+            "triggers": [],
+            "dependsOn": [
+              {
+                "process": 2,
+                "version": 1,
+                "step": 5
+              }
+            ]
+          },
+          {
+            "step": 5,
+            "name": "Step 5",
+            "triggers": [],
+            "dependsOn": []
           }
         ]
       },
       {
-        "step": 5,
-        "name": "Step 5",
-        "triggers": [],
-        "dependsOn": []
+        "version": 3,
+        "enabled": true,
+        "steps": [
+          {
+            "step": 1,
+            "name": "Step 1",
+            "triggers": [
+              {
+                "process": 2,
+                "version": 2
+              }
+            ],
+            "dependsOn": []
+          },
+          {
+            "step": 2,
+            "name": "Step 2",
+            "triggers": [],
+            "dependsOn": []
+          },
+          {
+            "step": 3,
+            "name": "Step 3",
+            "triggers": [],
+            "dependsOn": []
+          },
+          {
+            "step": 4,
+            "name": "Step 4",
+            "triggers": [],
+            "dependsOn": [
+              {
+                "process": 2,
+                "version": 2,
+                "step": 3
+              }
+            ]
+          },
+          {
+            "step": 5,
+            "name": "Step 5",
+            "triggers": [],
+            "dependsOn": []
+          }
+        ]
       }
     ]
   },
   {
     "process": 2,
-    "version": 1,
     "name": "Process B",
-    "enabled": true,
-    "steps": [
+    "versions": [
       {
-        "step": 1,
-        "name": "Step 1",
-        "triggers": [],
-        "dependsOn": []
+        "version": 1,
+        "enabled": true,
+        "steps": [
+          {
+            "step": 1,
+            "name": "Step 1",
+            "triggers": [],
+            "dependsOn": []
+          },
+          {
+            "step": 2,
+            "name": "Step 2",
+            "triggers": [],
+            "dependsOn": []
+          },
+          {
+            "step": 3,
+            "name": "Step 3",
+            "triggers": [],
+            "dependsOn": []
+          },
+          {
+            "step": 4,
+            "name": "Step 4",
+            "triggers": [],
+            "dependsOn": []
+          },
+          {
+            "step": 5,
+            "name": "Step 5",
+            "triggers": [],
+            "dependsOn": []
+          }
+        ]
       },
       {
-        "step": 2,
-        "name": "Step 2",
-        "triggers": [],
-        "dependsOn": []
-      },
-      {
-        "step": 3,
-        "name": "Step 3",
-        "triggers": [],
-        "dependsOn": []
-      },
-      {
-        "step": 4,
-        "name": "Step 4",
-        "triggers": [],
-        "dependsOn": []
-      },
-      {
-        "step": 5,
-        "name": "Step 5",
-        "triggers": [],
-        "dependsOn": []
-      }
-    ]
-  },
-  {
-    "process": 2,
-    "version": 2,
-    "name": "Process B",
-    "enabled": true,
-    "steps": [
-      {
-        "step": 1,
-        "name": "Step 1",
-        "triggers": [],
-        "dependsOn": []
-      },
-      {
-        "step": 2,
-        "name": "Step 2",
-        "triggers": [],
-        "dependsOn": []
-      },
-      {
-        "step": 3,
-        "name": "Step 3",
-        "triggers": [],
-        "dependsOn": []
+        "version": 2,
+        "enabled": true,
+        "steps": [
+          {
+            "step": 1,
+            "name": "Step 1",
+            "triggers": [],
+            "dependsOn": []
+          },
+          {
+            "step": 2,
+            "name": "Step 2",
+            "triggers": [],
+            "dependsOn": []
+          },
+          {
+            "step": 3,
+            "name": "Step 3",
+            "triggers": [],
+            "dependsOn": []
+          }
+        ]
       }
     ]
   },
   {
     "process": 3,
-    "version": 1,
     "name": "Process C",
-    "enabled": true,
-    "steps": [
+    "versions": [
       {
-        "step": 1,
-        "name": "Step 1",
-        "triggers": [],
-        "dependsOn": []
+        "version": 1,
+        "enabled": true,
+        "steps": [
+          {
+            "step": 1,
+            "name": "Step 1",
+            "triggers": [],
+            "dependsOn": []
+          },
+          {
+            "step": 2,
+            "name": "Step 2",
+            "triggers": [],
+            "dependsOn": []
+          },
+          {
+            "step": 3,
+            "name": "Step 3",
+            "triggers": [],
+            "dependsOn": []
+          }
+        ]
       },
       {
-        "step": 2,
-        "name": "Step 2",
-        "triggers": [],
-        "dependsOn": []
-      },
-      {
-        "step": 3,
-        "name": "Step 3",
-        "triggers": [],
-        "dependsOn": []
-      }
-    ]
-  },
-  {
-    "process": 3,
-    "version": 2,
-    "name": "Process C",
-    "enabled": true,
-    "steps": [
-      {
-        "step": 1,
-        "name": "Step 1",
-        "triggers": [],
-        "dependsOn": []
-      },
-      {
-        "step": 2,
-        "name": "Step 2",
-        "triggers": [],
-        "dependsOn": []
-      },
-      {
-        "step": 3,
-        "name": "Step 3",
-        "triggers": [],
-        "dependsOn": []
+        "version": 2,
+        "enabled": true,
+        "steps": [
+          {
+            "step": 1,
+            "name": "Step 1",
+            "triggers": [],
+            "dependsOn": []
+          },
+          {
+            "step": 2,
+            "name": "Step 2",
+            "triggers": [],
+            "dependsOn": []
+          },
+          {
+            "step": 3,
+            "name": "Step 3",
+            "triggers": [],
+            "dependsOn": []
+          }
+        ]
       }
     ]
   }

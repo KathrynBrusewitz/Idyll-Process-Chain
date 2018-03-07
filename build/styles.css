@@ -830,6 +830,14 @@ hr {
 }
 
 
+text {
+  pointer-events: none;
+}
 
-/* Put your custom styles here */
+.node:hover {
+  stroke-width: 6px;
+}
 
+.link {
+  stroke-width: 8px;
+}
