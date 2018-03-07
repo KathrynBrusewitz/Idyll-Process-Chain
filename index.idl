@@ -72,10 +72,10 @@ if (foundIndex >= 0) {execSteps[foundIndex] = Object.assign(execSteps[foundIndex
 
 Now consider a scenario where we have two processes: Process A and Process B.
 
-//[Aside]
-//  [data name:"processesAB" source:"processes-a-b.json" /]
-//  [ProcessChain data:processesAB /]
-//[/Aside]
+[Aside]
+  [data name:"processesAB" source:"processes-a-b.json" /]
+  [ProcessChain data:processesAB versions:`[1,2]` /]
+[/Aside]
 
 
 What if we want Step 2 in Process A to execute Process B? What if we don't want Step 4 to be completed until Step 3 in Process B is complete? We can handle these cases by defining relationships.

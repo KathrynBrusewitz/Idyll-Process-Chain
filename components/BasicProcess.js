@@ -2,9 +2,9 @@ const React = require("react");
 const D3Component = require("idyll-d3-component");
 const d3 = require("d3");
 
-const width = 400,
+const width = 500,
   svgWidth = 600,
-  height = 200,
+  svgHeight = 200,
   nodeSize = 12,
   lineWidth = 10,
   nodeColorIncomplete = "#d8d8d8",
@@ -16,7 +16,7 @@ const width = 400,
 class BasicProcess extends D3Component {
   initialize(node, props) {
     const svg = (this.svg = d3.select(node).append("svg"));
-    svg.style("width", svgWidth).style("height", height);
+    svg.style("width", svgWidth).style("height", svgHeight);
 
     if (this.noData(props)) {
       return false;
@@ -39,7 +39,7 @@ class BasicProcess extends D3Component {
 
   draw(props, clear) {
     // Get steps as nodes
-    var nodes = props.data.slice(); // Creates deep copy
+    var nodes = props.data.slice(); // Creates shallow copy
     var lastNode = {
       step: nodes.length + 1,
       name: "Complete"
@@ -52,7 +52,7 @@ class BasicProcess extends D3Component {
     // Create node locations
     nodes.map(function(d) {
       d["x"] = (d.step - 0.5) * xdist;
-      d["y"] = height / 3;
+      d["y"] = svgHeight / 3;
     });
 
     // Autogenerate links
