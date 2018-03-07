@@ -18,22 +18,26 @@ class ProcessChain extends D3Component {
     svg.style("width", svgWidth).style("height", svgHeight);
 
     this.authenticate(props);
-    this.draw(props);
+    this.draw(props, false);
   }
 
   update(props) {
     this.authenticate(props);
-    this.draw(props);
+    this.draw(props, true);
   }
 
   authenticate(props) {
+    console.log("auth called");
     if (!props.data || props.data.length === 0) {
       return false;
     }
   }
 
-  draw(props) {
+  draw(props, clear) {
     console.log("draw called");
+    if (clear) {
+      this.svg.selectAll("*").remove();
+    }
   }
 }
 
