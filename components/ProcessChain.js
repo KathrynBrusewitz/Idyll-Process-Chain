@@ -2,32 +2,38 @@ const React = require("react");
 const D3Component = require("idyll-d3-component");
 const d3 = require("d3");
 
-const size = 600;
+const width = 400,
+  svgWidth = 600,
+  svgHeight = 200,
+  nodeSize = 12,
+  lineWidth = 10,
+  nodeColorIncomplete = "#d8d8d8",
+  nodeColorComplete = "orange",
+  nodeColorLast = "#444";
 
+// Expects props.data: array of process objects
 class ProcessChain extends D3Component {
   initialize(node, props) {
     const svg = (this.svg = d3.select(node).append("svg"));
-    svg
-      .attr("viewBox", `0 0 ${size} ${size}`)
-      .style("width", "100%")
-      .style("height", "auto");
+    svg.style("width", svgWidth).style("height", svgHeight);
 
-    svg
-      .append("circle")
-      .attr("r", 10)
-      .attr("cx", Math.random() * size)
-      .attr("cy", Math.random() * size);
-
-    console.log(props.data);
+    this.authenticate(props);
+    this.draw(props);
   }
 
   update(props) {
-    this.svg
-      .selectAll("circle")
-      .transition()
-      .duration(750)
-      .attr("cx", Math.random() * size)
-      .attr("cy", Math.random() * size);
+    this.authenticate(props);
+    this.draw(props);
+  }
+
+  authenticate(props) {
+    if (!props.data || props.data.length === 0) {
+      return false;
+    }
+  }
+
+  draw(props) {
+    console.log("draw called");
   }
 }
 

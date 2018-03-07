@@ -43,7 +43,7 @@ A process...
 [derived name:linearCurStep value:`linearSteps.length` /]
 [var name:linearStepName value:"" /]
 [Aside]
-  Process A
+  [Display value:"Process A" /]
   [BasicProcess data:linearSteps /]
 [/Aside]
 
@@ -63,7 +63,7 @@ Let's create an execution of the process we just made. [Button onClick:`execStep
 // Demo 2
 [var name:execSteps value:{} /]
 [Aside]
-  Process A Execution 1
+  [Display value:"Process A Execution 1" /]
   [BasicProcess data:execSteps /]
 [/Aside]
 
@@ -72,10 +72,10 @@ if (foundIndex >= 0) {execSteps[foundIndex] = Object.assign(execSteps[foundIndex
 
 Now consider a scenario where we have two processes: Process A and Process B.
 
-[Aside]
-  [data name:"stepsAB" source:"processes-a-b.json" /]
-  //[Process data:execSteps /]
-[/Aside]
+//[Aside]
+//  [data name:"processesAB" source:"processes-a-b.json" /]
+//  [ProcessChain data:processesAB /]
+//[/Aside]
 
 
 What if we want Step 2 in Process A to execute Process B? What if we don't want Step 4 to be completed until Step 3 in Process B is complete? We can handle these cases by defining relationships.
